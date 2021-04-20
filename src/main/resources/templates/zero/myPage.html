@@ -17,32 +17,6 @@
 <script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
 <script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
 <script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#defaultNav').load('navbar');
-		$('footer').load('footer');
-		$('#reviewSaveBtn').on("click", function () {
-			/* 유효성 작업 -> */ 
-			if($('#productReviewContents').val() == '' || $('#productReviewContents').val() ==undefined){
-				alert('내용을 입력해주세요');
-				return;
-			}
-			if(confirm('리뷰를 등록하시겠습니까?')){
-				$.ajax ({
-					url: "/zero/productDetail",
-					type: "POST",
-					data: {contents: $('#productReviewContents').val(), score : $('#productReviewContents').val()},
-					success: function(data) {
-						alert(data);
-					},
-					error: function() {
-						alert("ajax 통신에 오류가 발생하였습니다.");
-					}
-				});	
-			}
-		});
-	});
-</script>
 </head>
 <body>
 	<!-- 네비게이션 영역 -->
@@ -64,7 +38,7 @@
                         <col width="*%" />
                         <col width="10%" />
                         <col width="15%" />
-                        <col width="15%" />
+                        <c1ol width="15%" />
                     </colgroup>
                     <thead>
                         <tr>
@@ -84,13 +58,16 @@
                             <td th:text="${list.orderCnt}"></td>
                             <td th:text="${list.totalPrice}+원"></td>
                             <td>
-                                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#review">리뷰작성</button>
+                                <button class="btn btn-success" type="button" th:onclick="|reviewClick(${list.orderDetailPk})|" data-toggle="modal" data-target="#review">리뷰작성</button>
 								<!-- 리뷰작성부분 값 넘겨주기 구현해야함 -->
                                 <div class="modal fade" id="review">
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <div class="modal-title">리뷰작성</div>
+                                                <input type="hidden" id="orderPk">
+                                                <!-- <input type="hidden" th:value="customerPk"> -->
+                                                <!-- <input type="hidden" th:value="${list.orderDetailPk}"> -->
                                                 <button class="close" type="button" data-dismiss="modal">&times;</button>
                                             </div>
                                             <div class="modal-body">
@@ -130,5 +107,42 @@
     
     <!-- footer 영역 -->
     <footer class="py-5 mt-5"></footer>
+    
+    <script type="text/javascript">
+	$(document).ready(function(){
+		$('#defaultNav').load('navbar');
+		$('footer').load('footer');
+		$('#reviewSaveBtn').on("click", function () {
+			/* 유효성 작업 -> */ 
+			if($('#productReviewContents').val() == '' || $('#productReviewContents').val() ==undefined){
+				alert('내용을 입력해주세요');
+				return;
+			}
+			if(confirm('리뷰를 등록하시겠습니까?')){
+				$.ajax ({
+					url: "/zero/saveProductReview",
+					type: "POST",
+					data: {productReviewContents: $('#productReviewContents').val(), productReviewScore : $('#productReviewScore').val(), orderDetailPk :$('#orderPk').val()},
+					success: function(data) {
+						if(data == "1"){
+							alert("리뷰 등록을 완료하였습니다.");	
+							
+						}else{
+							alert("리뷰등록을 실패하였습니다 다시 등록해주세요.");
+						}
+					},
+					error: function() {
+						alert("ajax 통신에 오류가 발생하였습니다.");
+					}
+				});	
+			}
+		})
+		
+	});
+	
+	function reviewClick(num){
+		document.querySelector('#orderPk').value = num;
+	}
+</script>
 </body>
 </html>

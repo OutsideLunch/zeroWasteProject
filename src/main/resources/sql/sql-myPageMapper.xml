@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myPageMapper">
+	
+	<select id="productReview" resultType="com.bitc.zero.dto.ReviewDto">
+		<![CDATA[ 
+			SELECT 
+				c.customer_name, pr.product_review_contents, pr.product_review_score
+			FROM 
+				product_review pr
+			JOIN 
+				customers c
+			ON 
+				pr.customer_pk = c.customer_pk; 
+		]]>
+	</select>
+	
+	<insert id="insertProductReview" parameterType="com.bitc.zero.dto.ReviewDto" useGeneratedKeys="true" keyProperty="productReviewPk">
+		<!-- myPageMapper.insertProductReview -->
+		<![CDATA[ 
+			INSERT INTO 
+				product_review (order_detail_pk, customer_pk, product_review_contents, product_review_score)
+			VALUE
+				(#{orderDetailPk}, #{customerPk}, #{productReviewContents}, #{productReviewScore})
+			]]>
+	</insert>
+	
+	<insert id="postProductReviewImg" parameterType="com.bitc.zero.dto.TFileDto">
+		<![CDATA[
+			INSERT INTO t_file
+				(board_idx, original_file_name, stored_file_path, 
+				file_size, create_id, create_datetime)
+			VALUES
+		]]> 
+		
+		<foreach collection="list" item="file" separator=",">
+			(
+				#{file.boardIdx},
+				#{file.originalFileName},
+				#{file.storedFilePath},
+				#{file.fileSize},
+				'test',
+				NOW()
+			)
+		</foreach>
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
