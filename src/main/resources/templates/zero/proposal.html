@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>proposal</title>
+<link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+<!-- 모든 페이지 공통 로고바,네비게이션,푸터, 구글폰트 css -->
+<link rel="stylesheet" th:href="@{/css/default.css}"></link>
+<!-- 구글폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
+<!-- font awesome 4의 icon 사용하기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
+<script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#defaultNav').load('navbar');
+		$('footer').load('footer');
+	});
+</script>
+<style>
+    
+
+    .file_input_textbox {float:left; height:29px;}
+	.file_input_div {position:relative; width:80px; height:36px; overflow:hidden;}
+	.file_input_img_btn {padding:0 0 0 5px;}
+	.file_input_hidden {font-size:29px; position:absolute; right:0px; top:0px; opacity:0; filter: alpha(opacity=0); -ms-filter: alpha(opacity=0); cursor:pointer;}
+</style>
+
+</head>
+<body>
+	<!-- 네비게이션 영역 -->
+	<div id="defaultNav" class="sticky-top"></div>
+	<div class="container py-2 my-5 bg-light">
+        <div class="d-flex justify-content-center p-4">
+            <h4>입점제안</h4>
+        </div>
+        <form action="" method="POST" class="text-center"  enctype="multipart/form-data">
+        	<div class="container col-sm-8 mx-auto">
+        		<div class="form-group d-flex row align-items-center">
+	                <label for="userEmail" class="col-sm-4 p-0 m-0">단체명</label>
+	                <input type="text" id="userEmail" name="userEmail" class="form-control col-sm-8 text-center" placeholder="id@example.com">
+	            </div>
+	            <div class="form-group d-flex row align-items-center">
+	         		<label for="userPw" class="col-sm-4 p-0 m-0">단체 소개 링크</label>
+					<input type="password" id="userPw" name="userPw" class="form-control col-sm-8 text-center"   placeholder="8자리 이상 대소문자와 특수문자 사용">
+	            </div>
+	            <div class="form-group d-flex row align-items-center">
+	         		<label for="pwCheck" class="col-sm-4 p-0 m-0">제품명</label>
+					<input type="password" id="pwCheck" name="pwCheck" class="form-control col-sm-8 text-center"   placeholder="입력하신 비밀번호를 확인하세요">
+	            </div>
+	            <div class="form-group d-flex row align-items-center">
+	         		<label for="userName" class="col-sm-4 p-0 m-0">무엇을 대체하는 상품인가요?</label>
+					<input type="text" id="userName" name="userName" class="form-control col-sm-8 text-center"   placeholder="이름을 입력하세요">
+	            </div>
+	            <div class="form-group d-flex row align-items-center">
+	         		<label for="userPhone" class="col-sm-4 p-0 m-0">재품의 재질은 무엇인가요?</label>
+					<input type="text" id="userPhone" name="userPhone" class="form-control col-sm-8 text-center"   placeholder="휴대전화 번호를 입력하세요">
+	            </div>
+	            <div class="form-group d-flex row align-items-center">
+	         		<label for="userAddress" class="col-sm-4 p-0 m-0">포장 재질은 무엇인가요?</label>
+					<input type="text" id="userAddress" name="userAddress" class="form-control col-sm-8 text-center"   placeholder="배송지로 사용할 주소를 입력하세요">
+	            </div>
+	            <div class="form-group col-sm-8 mx-auto pt-3">
+                    <label for="" class="form-label">
+                        <small>제안 상품에 대해 추가로 공유하고 싶은 첨부자료가 있다면 업로드 해주세요</small>
+                    </label>
+                    <div class="d-flex justify-content-start">
+                        <div class="file_input_div">
+                            <i class="fa fa-folder-open-o fa-2x" aria-hidden="true"></i>
+                            <input type="file" id="file" name="file" class="form-control-file file_input_hidden" onchange="javascript: document.getElementById('fileName').value = this.value">
+                        </div>
+                        <input type="text" id="fileName" class="file_input_textbox form-control border-0" readonly >
+                    </div>
+                </div>
+        	</div>
+			<button type="submit" class="btn btn-secondary btn-block col-sm-6 mx-auto">
+				제출하기
+			</button>
+        </form>
+    </div>
+    
+    <!-- footer 영역 -->
+    <footer class="py-5 mt-5"></footer>
+</body>
+</html>

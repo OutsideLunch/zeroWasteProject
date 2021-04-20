@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>productDetail</title>
+<link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+<!-- 모든 페이지 공통 로고바,네비게이션,푸터, 구글폰트 css -->
+<link rel="stylesheet" th:href="@{/css/default.css}"></link>
+<!-- 구글폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
+<!-- font awesome 4의 icon 사용하기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
+<script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#defaultNav').load('navbar');
+		$('footer').load('footer');
+	});
+</script>
+<script>
+	var sell_price;
+	var amount;
+
+	function init() {
+		sell_price = document.form.sell_price.value;
+		amount = document.form.amount.value;
+		document.form.sum.value = sell_price;
+		change();
+	}
+
+	function add() {
+		hm = document.form.amount;
+		sum = document.form.sum;
+		hm.value++;
+
+		sum.value = parseInt(hm.value) * sell_price;
+	}
+
+	function del() {
+		hm = document.form.amount;
+		sum = document.form.sum;
+		if (hm.value > 1) {
+			hm.value--;
+			sum.value = parseInt(hm.value) * sell_price;
+		}
+	}
+
+	function change() {
+		hm = document.form.amount;
+		sum = document.form.sum;
+
+		if (hm.value < 0) {
+			hm.value = 0;
+		}
+		sum.value = parseInt(hm.value) * sell_price;
+	}
+</script>
+
+
+<style>
+.card-header, .card-body {
+	background-color: ivory;
+}
+
+/* 수량박스를 위한 부분 */
+div.card-body input {
+	font-size: 18px;
+	width: 50px;
+	padding: 0px;
+	margin: 0;
+	border: 1px solid #eee;
+}
+
+.btn {
+	border : none;
+	background-color: lightgray;
+}
+
+button:hover {
+	/* 마우스 포인터 형태 */
+	cursor: pointer;
+}
+</style>
+</head>
+<body onload="init();" >
+	<!-- 네비게이션 영역 -->
+	<div id="defaultNav" class="sticky-top"></div>
+		
+	<main class="container py-5">
+		<section class="row">
+			<div class="col-sm-6">
+				<img th:src="@{data.storedFilePath}" alt="" width="500px">
+			</div>
+			<div class="col-sm-6 d-flex flex-column">
+				<div class="card-header">
+					<h5 class="text-gray font-weight-normal mt-5" th:text="${data.productName}"></h5><br><hr>
+					<p th:attrappend="text=${data.partnerName}"><b>브랜드</b> </p>
+					<p th:attrappend="text=${data.productPrice}"><b>판매가</b> </p>
+				</div>
+				<div class="card-body">
+					<form name="form" method="get">
+						<div class="d-flex justify-content-between">
+							<div class="d-flex">
+								<label for="amount" class="m-0 pr-1">수량</label>
+								<input type=hidden name="sell_price" th:value="${data.productName}"> 
+								<input type="button" value=" + " onclick="add();"> 
+								<input type="text" name="amount" value="1" size="3" onchange="change();" class="text-center"> 
+								<input type="button" value=" - " onclick="del();">
+							</div>
+							<div>
+								총 상품 금액 <input type="text" name="sum" readonly>원
+							</div>
+						</div>
+					</form>
+					<br>
+					<br>
+					<div class="d-flex justify-content-center">
+						<div>
+							<th:button type="@{button}" class="btn btn-success btn-lg" id="buy"/>
+							구매하기
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<h5>상품 상세 설명</h5>
+			<article>
+				<img th:src="@{data.storedFilePath}" alt=""  width="100%">
+				<img th:src="@{data.storedFilePath}" alt=""  width="100%">
+				<img th:src="@{data.storedFilePath}" alt=""  width="100%">
+			</article>
+		</section>
+		<section>
+			<h5>후기</h5>
+		</section>
+	</main>
+	<!-- footer 영역 -->
+    <footer class="py-5 mt-5"></footer>
+</body>
+</html>

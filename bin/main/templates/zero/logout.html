@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>login</title>
+<link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+<!-- 모든 페이지 공통 로고바,네비게이션,푸터, 구글폰트 css -->
+<link rel="stylesheet" th:href="@{/css/default.css}"></link>
+<!-- 구글폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
+<!-- font awesome 4의 icon 사용하기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
+<script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#defaultNav').load('navbar');
+		$('footer').load('footer');
+		
+		setTimeout(function(){
+			location.href="/zero/main";	
+		}, 3000);
+	});
+</script>
+<style>
+    ::placeholder {
+        font-size: 0.8rem;
+    }
+</style>
+</head>
+<body>
+	<div id="defaultNav" class="sticky-top"></div>
+    <main class="container py-5 text-center">
+        <h3>로그아웃 되었습니다.</h3>
+    </main>
+    <footer class="py-5 mt-5"></footer>
+</body>
+</html>

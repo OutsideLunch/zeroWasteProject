@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thypeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Begin Again</title>
+<link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+<!-- 모든 페이지 공통 로고바,네비게이션,푸터, 구글폰트 css -->
+<link rel="stylesheet" th:href="@{/css/default.css}"></link>
+<!-- 구글폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
+<!-- font awesome 4의 icon 사용하기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
+<script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#defaultNav').load('navbar');
+		$('footer').load('footer');
+	});
+</script>
+<style>
+	/* 	헤더 슬라이드 이미지 문구 */
+	.cc1{
+		position : absolute;
+		top : 1rem;
+		color : black;
+	}
+	
+	.cc2 {
+		position : absolute;
+		top : 60%;
+		left : 50%;
+		transform : translate(-50%, -50%);
+		color : black;
+	}
+	
+	.cc3 {
+		position : absolute;
+		bottom : 3rem;
+		right : 0px;
+	}
+</style>
+</head>
+<body>
+	<!-- 로고&네비게이션바 -->
+	<div id="defaultNav" class="sticky-top">
+	</div>
+	<!-- 헤더 슬라이드 -->
+	<header class="mb-4">
+		<div id="imgslider" class="carousel slide carousel-fade" data-ride="carousel">
+	      <!-- 인디케이터 -->
+	      <ul class="carousel-indicators">
+	        <!-- 인디케이터의 수 (슬라이드할 이미지의 수) -->
+	        <li data-target="#imgslider" data-slide-to="0" class="active"></li>
+	        <li data-target="#imgslider" data-slide-to="1"></li>
+	        <li data-target="#imgslider" data-slide-to="2"></li>
+	        <li data-target="#imgslider" data-slide-to="3"></li>
+	      </ul>
+	      <!-- 슬라이드 쇼 -->
+	      <div class="carousel-inner">
+	        <div class="carousel-item active">
+	          <img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 550px;">
+	          <div class="carousel-caption cc1">
+	            <h3>자연에서 태어났어요!</h3>
+	            <h3>매일 쓰는 칫솔과 함께하는 Green Life</h3>
+	          </div>
+	        </div>
+	        <div class="carousel-item">
+	          <img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 550px;">
+	          <div class="carousel-caption cc2">
+          		<h2>제로웨이스트의 첫걸음</h2>
+            	<h2>친환경 포장을 지향합니다.</h2>
+	          </div>
+	        </div>
+	        <div class="carousel-item">
+	          <img th:src="@{/image/Header_fish.jpg}" alt="" style="width: 100%; height: 550px;">
+	          <div class="carousel-caption text-left cc3">
+	            <h3>NO 플라스틱 NO 비닐</h3>
+	            <h3>다함께 살아가는 지구</h3>
+	          </div>
+	        </div>
+	        <div class="carousel-item">
+	          <img th:src="@{/image/Header_idea.jpg}" alt="" style="width: 100%; height: 550px;">
+	          <div class="carousel-caption cc4">
+	            <h3>당신의 제로웨이스트 아이디어를 기다립니다.</h3>
+	            <h3><a href="#" class="text-white">작성하기</a></h3>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	</header>
+	<!-- 신상품, 추천상품 슬라이드 -->
+	<main class = "container">
+		<!-- 신상품 -->
+		<div id="carousel-main1" class="carousel slide mb-2" data-ride="carousel">
+			<h5>new arrival</h5>
+			<!-- 슬라이드 쇼 -->
+			<div class="carousel-inner pb-5">
+			  <div class="carousel-item active">
+			  	<div class="d-flex">
+					<div class="px-2">
+						<a><img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 300px;"></a>
+					</div>
+					<div class="px-2">
+						<a><img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 300px;"></a>
+					</div>
+					<div class="px-2">
+						<a><img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 300px;"></a>
+					</div>
+					<div class="px-2">
+						<a><img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 300px;"></a>
+					</div>
+			  	</div>
+			  </div>
+			  <div class="carousel-item">
+			  	<div class="d-flex">
+			  		<div class="px-2">
+			  			<a><img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 300px;"></a>
+				  	</div>
+				  	<div class="px-2">
+				  		<a><img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 300px;"></a>
+				  	</div>
+				  	<div class="px-2">
+				  		<a><img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 300px;"></a>
+				  	</div>
+				  	<div class="px-2">
+				  		<a><img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 300px;"></a>
+				  	</div>
+			  	</div>
+			  </div>
+			</div>
+			<!-- 컨트롤 -->
+			<a href="#carousel-main1" class="carousel-control-prev" data-slide="prev">
+			  <i class="fa fa-chevron-circle-left fa-2x" aria-hidden="true"></i>
+			</a>
+			<a href="#carousel-main1" class="carousel-control-next" data-slide="next">
+			  <i class="fa fa-chevron-circle-right fa-2x" aria-hidden="true"></i>
+			</a>
+		</div>
+		
+		<!-- 추천상품 -->
+	    <div id="carousel-main2" class="carousel slide mb-2" data-ride="carousel">
+			<h5>recommendation</h5>
+			<!-- 슬라이드 쇼 -->
+			<div class="carousel-inner pb-5">
+			  <div class="carousel-item active">
+			  	<div class="d-flex">
+					<div class="px-2">
+						<img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 300px;">
+					</div>
+					<div class="px-2">
+						<img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 300px;">
+					</div>
+					<div class="px-2">
+						<img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 300px;">
+					</div>
+					<div class="px-2">
+						<img th:src="@{/image/Header_toothBrush.jpg}" alt="" style="width: 100%; height: 300px;">
+					</div>
+			  	</div>
+			  </div>
+			  <div class="carousel-item">
+			  	<div class="d-flex">
+			  		<div class="px-2">
+			  			<img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 300px;">
+				  	</div>
+				  	<div class="px-2">
+				  		<img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 300px;">
+				  	</div>
+				  	<div class="px-2">
+				  		<img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 300px;">
+				  	</div>
+				  	<div class="px-2">
+				  		<img th:src="@{/image/Header_paperBox.jpg}" alt="" style="width: 100%; height: 300px;">
+				  	</div>
+			  	</div>
+			  </div>
+			</div>
+			<!-- 컨트롤 -->
+			<a href="#carousel-main2" class="carousel-control-prev" data-slide="prev">
+			  <i class="fa fa-chevron-circle-left fa-2x" aria-hidden="true"></i>
+			</a>
+			<a href="#carousel-main2" class="carousel-control-next" data-slide="next">
+			  <i class="fa fa-chevron-circle-right fa-2x" aria-hidden="true"></i>
+			</a>
+		</div>
+	</main>
+	<!-- 푸터 -->
+	<footer class="py-5 mt-5">
+    </footer>
+</body>
+</html>

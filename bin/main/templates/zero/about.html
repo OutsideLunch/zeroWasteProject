@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>idea Write</title>
+<link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+<!-- 모든 페이지 공통 로고바,네비게이션,푸터, 구글폰트 css -->
+<link rel="stylesheet" th:href="@{/css/default.css}"></link>
+<!-- 구글폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
+<!-- font awesome 4의 icon 사용하기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
+<script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#defaultNav').load('navbar');
+		$('footer').load('footer');
+	});
+</script>
+</head>
+<body>
+	<!-- 네비게이션 영역 -->
+	<div id="defaultNav" class="sticky-top"></div>
+	
+	<main class="container my-5">
+		<div class="row">
+			<div class="col-sm-2">
+				<ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-muted" th:text="${list.categoryName}"></a>
+                    </li>
+                </ul>
+			</div>
+			<div class="col-sm-9">
+				<div>
+				<img th:src="@{/image/거북이.png}" class="mb-4" alt="" style="width: 100%">
+
+				<h4>플라스틱에 삶의 터전을 빼앗긴 동물들</h4>
+				<small>
+				2015년 코스타리카 해안을 탐방하던 미국 텍사스 A&M 대학교 해양생물학 연구팀은 상처 입은 바다거북을 발견하고 충격에 빠졌습니다. 
+				바다거북 콧속에 10cm가 넘는 플라스틱 빨대가 박혀 있었기 때문인데요. 해당 영상이 공개된 후 세계 각지에서 플라스틱 빨대 퇴출 운동이 일어났고, 
+				플라스틱 재활용 및 친환경 소재에 대한 관심이 급증하게 됐습니다. 
+				또 자연에서 분해되지 않는 플라스틱을 대체할 친환경 소재 개발에 많은 노력을 기울이고 있습니다.
+				바다 위의 거대한 플라스틱 쓰레기섬, 중국과 필리핀에서 일어났던 쓰레기 수입 중지 선언 등으로 인해 쓰레기 처리 문제의 심각성이 드러났습니다. 
+				플라스틱은 사람들의 편의성을 위해 등장했지만, 너무 튼튼한 데 반해 한 번 사용하면 폐기해야하며 잘 썩지도 않습니다. 소각된 쓰레기는 대기오염으로, 바다에 쌓이는 해양 쓰레기는 먹이사슬 최상위인 인간에게 다시 돌아옵니다. 
+				이런 환경문제에 관심을 가지며 대두된 라이프 스타일이 바로 '제로웨이스트 라이프'입니다.
+				개인에서부터 경각심을 가지고 일회용품을 줄여나간다면 서서히 원래의 자연환경을 되찾고 동물들에게 삶의 터전을 되돌려줄 수 있을 것입니다.
+				</small><br></div>
+				
+				<div>
+				<img th:src="@{/image/제로웨이스트.png}" class="mb-4 mt-5" alt="" style="width: 100%">
+				<h4>제로웨이스트 라이프로의 첫 발걸음, 레스웨이스트와 함께</h4>
+				<small>
+				 제로(zero)웨이스트가 ‘쓰레기 0%’를 지향하는 것만 같아 어렵게 느껴진다면 레스(less)웨이스트부터 실천해보는건 어떤가요?
+				 작은 일부터 차근차근 해나가자 개념으로 내 생활 반경에서 불필요한 일회용품 사용을 거절하면 됩니다.
+				 생활용품을 사용하면서 플라스틱 발생을 줄여나가는 것에 초점을 맞춰보세요. 
+				 알루미늄에 담긴 치약, 플라스틱 통에 포장된 샴푸와 세제, 플라스틱으로 만들어진 칫솔에서 고체 치약, 샴푸바, 소프넛(껍질에서 거품이 나는 무환자나무 열매로 화학 비누 대용으로 사용 가능), 
+				 대나무 칫솔(대나무로 만든 바디에 생분해성 플라스틱 소재로 제작한 칫솔모가 달린 제품)로 서서히 플라스틱과 교체해보는거예요.
+				 제로웨이스트로 가는 가장 빠른 지름길 레스웨이스트. 생각보다 실천이 어렵지 않으니 치약 같은 작은 생활용품부터 시작해봅시다!
+				</small><br></div>
+			</div>
+		</div>
+	</main>
+	    
+    <!-- footer 영역 -->
+    <footer class="py-5 mt-5"></footer>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitc.zero.mapper.ZeroMapper">
+	<insert id="insertJoinzerowaste" parameterType="com.bitc.zero.dto.JoinDto">
+		<![CDATA[
+			INSERT INTO 
+				`zerowaste`.`customers` (`customer_email`, `customer_pw`, `customer_addr`, `customer_name`, `customer_gender`, `customer_phone`) 
+			VALUES 
+				(#{customerEmail}, #{customerPw}, #{customerAddr}, #{customerName}, #{customerGender}, #{customerPhone})
+		]]>
+	</insert>
+	
+	<!-- 회원가입 정보 DB에 삽입하기 -->
+	<insert id="insertJoin" parameterType="com.bitc.zero.dto.JoinDto" useGeneratedKeys="true" keyProperty="customerPk">
+		<![CDATA[fgetCustomerPk
+			INSERT INTO customers 
+				(customer_email, customer_pw, customer_addr, customer_name, customer_gender, customer_phone)
+			VALUES 
+				(#{customerEmail}, #{customerPw}, #{customerAddr}, #{customerName}, #{customerGender}, #{customerPhone})
+		]]>
+	</insert>
+	
+	<!-- // 로그인체크시 email과 pw를 DB에서 검색하고 0또는 1값을 가져옴 -->
+	<select id="selectCustomerInfoYn" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS cnt
+			FROM
+				customers
+			WHERE
+				customer_email = #{customerEmail}
+			AND
+				customer_pw = #{customerPw}
+		]]>
+	</select>
+	
+	<!--로그인 -> 회원pk-->
+	<select id="getCustomerPk" parameterType="String" resultType="int">
+		SELECT customer_pk
+		FROM customers
+		WHERE customer_email = #{customerEmail}
+	</select>
+	
+	<!--마이페이지-->
+	<select id="getMypageInfo" parameterType="int" resultType="com.bitc.zero.dto.MyPageDto">
+			<!--getMypageInfo-->
+			SELECT od.order_detail_pk, o.order_date, p.product_name, p.product_price, od.order_cnt, (p.product_price * od.order_cnt) as total_price FROM orders_detail od
+			JOIN orders o
+			ON od.order_pk = o.order_pk		
+			JOIN product p
+			ON p.product_pk = od.product_pk
+			WHERE o.customer_pk=#{customerPk}
+			
+	</select>
+	
+	<select id="selectIdeaList" resultType="com.bitc.zero.dto.BoardDto">
+		<![CDATA[ 
+			SELECT 
+				board_pk, board_title, customer_name
+			FROM 
+				board b
+			JOIN 
+				board_category bc
+			JOIN
+				customers c
+			ON 
+				b.board_category_pk = bc.board_category_pk
+			AND
+				b.create_id = c.customer_pk
+			AND
+				b.board_category_pk = 2
+			AND
+				b.deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<select id="selectIdeaDetail" parameterType="int" resultType="com.bitc.zero.dto.BoardDto">
+		<![CDATA[ 
+			SELECT 
+				board_pk, board_title, board_contents, customer_name
+			FROM 
+				board b
+			JOIN
+				customers c
+			ON
+				b.create_id = c.customer_pk
+			AND
+				b.board_pk = #{boardPk}
+			AND
+				b.deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<select id="zeroFileList" parameterType="int" resultType="com.bitc.zero.dto.TFileDto">
+		<![CDATA[
+			SELECT
+				idx, board_idx, original_file_name, idx, stored_file_path,
+				FORMAT(ROUND(file_size / 1024), 0) AS file_size
+			FROM
+				t_file
+			WHERE
+				board_idx = #{boardIdx}
+			AND
+				deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<select id="selectCateInfo" parameterType="Integer" resultType="com.bitc.zero.dto.CategoryDto">
+		<![CDATA[ 
+			SELECT
+				board_category_pk, board_category_name
+			FROM
+				board_category
+			WHERE
+				board_category_pk = #{cateCode}
+		]]>
+	</select>
+	
+	<insert id="insertIdeaWrite" parameterType="com.bitc.zero.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardPk">
+		<![CDATA[ 
+			INSERT INTO 
+				board (board_category_pk, board_pk, board_title, board_contents, create_id, create_datetime)
+			VALUE
+				(2, #{boardPk}, #{boardTitle}, #{boardContents}, #{createId}, NOW())
+		]]>
+	</insert>
+	
+	<insert id="insertIdeaFile" parameterType="com.bitc.zero.dto.TFileDto">
+		<![CDATA[
+			INSERT INTO t_file
+				(board_idx, original_file_name, stored_file_path, 
+				file_size, create_id, create_datetime)
+			VALUES
+		]]> 
+		
+		<foreach collection="list" item="file" separator=",">
+			(
+				#{file.boardIdx},
+				#{file.originalFileName},
+				#{file.storedFilePath},
+				#{file.fileSize},
+				'test',
+				NOW()
+			)
+		</foreach>
+	</insert>
+	
+	<select id="zeroFileInformation" parameterType="map" resultType="com.bitc.zero.dto.TFileDto">
+		<![CDATA[
+			SELECT 
+		    	original_file_name, stored_file_path, file_size
+			FROM
+			    t_file
+			WHERE
+			    idx = #{idx}
+			AND 
+				board_idx = #{boardIdx}
+			AND
+				deleted_yn = 'N'
+		]]>
+	</select>
+	
+	<update id="ideaUpdate" parameterType="com.bitc.zero.dto.BoardDto">
+		<![CDATA[ 
+			UPDATE
+            	board
+         	SET
+            	board_title = #{boardTitle}, board_contents = #{boardContents}
+         	WHERE
+            	board_pk = #{boardPk}
+		]]>
+	</update>
+	
+	<update id="ideaDelete" parameterType="int">
+		<![CDATA[ 
+			UPDATE
+            	board
+         	SET
+            	deleted_yn = 'Y'
+         	WHERE
+            	board_pk = #{boardPk}
+		]]>
+	</update>
+	
+	<select id="productReview" resultType="com.bitc.zero.dto.ReviewDto">
+		<![CDATA[ 
+			SELECT 
+				c.customer_name, pr.product_review_contents, pr.product_review_score
+			FROM 
+				product_review pr
+			JOIN 
+				customers c
+			ON 
+				pr.customer_pk = c.customer_pk; 
+		]]>
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

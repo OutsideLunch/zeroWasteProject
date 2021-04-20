@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>notice Detail</title>
+<link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+<!-- 모든 페이지 공통 로고바,네비게이션,푸터, 구글폰트 css -->
+<link rel="stylesheet" th:href="@{/css/default.css}"></link>
+<!-- 구글폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
+<!-- font awesome 4의 icon 사용하기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
+<script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#defaultNav').load('navbar');
+		$('footer').load('footer');
+		
+		var boardPk = $("#boardPk").val();
+		
+		//전체 목록으로 이동
+		$("#btnList").on("click",function(){
+			//자바스크립트의 location을 사용하여 페이지 이동
+			location.href = "/zero/noticeList";
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<!-- 네비게이션 영역 -->
+	<div id="defaultNav" class="sticky-top"></div>
+	
+	<div class="container py-5">
+		<h4 class="text-center">공지사항</h4>
+        <form id="frm" method="POST" class="mt-4">
+            <table class="table table-light">
+				<tbody>
+					<tr>
+						<td>
+							<input type="text" id="boardTitle" name="boardTitle" th:value="${data.boardTitle}" class="form-control text-center">
+						</td>
+					</tr>
+					<tr class="d-flex justify-content-center">
+						<td>작성자</td>
+						<td th:text="${data.create_id}"></td>
+					</tr>
+					<tr>
+						<td colspan="4" class="text-center">
+							<img th:src="@{data.storedFilePath}" alt="" width="50%">
+						</td>
+					</tr>
+					<tr>
+						<td class="mx-auto">
+							<textarea title="내용" id="boardContents" name="boardContents" th:text="${data.boardContents}" class="form-control" rows="15"></textarea>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 화면에는 보이지 않고 서버에는 전송되는 데이터 -->
+			<input type="hidden" id="boardPk" name="boardPk" th:value="${data.boardPk}"/>
+			<input type="hidden" id="method" name="_method"/>
+			<div class="d-flex flex-rows justify-content-end">
+				<button type="button" class="btn btn-primary" id="btnList">목록으로</button>
+			</div>
+        </form>
+	</div>
+             	
+	<!-- footer 영역 -->
+    <footer class="py-5 mt-5"></footer>
+</body>
+</html>
