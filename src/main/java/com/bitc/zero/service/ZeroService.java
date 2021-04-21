@@ -59,9 +59,7 @@ public interface ZeroService {
 
 	// 마이페이지 상세
 	List<MyPageDto> getMypageInfo(int customerPk) throws Exception;
+
 	void postProductReview(ReviewDto review, MultipartHttpServletRequest uploadFiles) throws Exception;
-	
-	CategoryDto selectCateInfo(int cateCode) throws Exception;
-	
-	List<ReviewDto> productReview(String customerName) throws Exception;
+
 }

@@ -157,11 +157,6 @@ public class ZeroServiceImpl implements ZeroService {
 		}
 	}
 	
-	@Override
-	public List<ReviewDto> productReview(String customerName) throws Exception {
-		
-		return zeroMapper.productReview(customerName);
-	}
 }
 	
 
