@@ -6,11 +6,13 @@ import lombok.Data;
 @Data
 public class MyPageDto {
 	private int orderPk;
+	private int orderDetailPk;
 	private int customerPk;
 	private String orderDate;
 	private int productPk;
 	private int orderCnt;
 	private String productName;
 	private int productPrice;
+	private int totalPrice;
 
 }

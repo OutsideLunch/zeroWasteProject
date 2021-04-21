@@ -3,7 +3,7 @@
 <mapper namespace="myPageMapper">
 	
 	
-	<select id="selectCustomerInfoList" resultType="int">
+	<select id="selectCustomerInfo" resultType="int">
 	<!--myPageMapper.selectCustomerInfoList-->
 		SELECT customer_pk
 		FROM customers
@@ -11,7 +11,7 @@
 	</select>
 	
 	<!--mypageList-->
-    <select id="getMypageInfo" parameterType="int" resultType="com.bitc.zero.dto.MyPageDto">
+    <select id="getMypageInfoList" parameterType="int" resultType="com.bitc.zero.dto.MyPageDto">
     <!--myPageMapper.getMypageInfo-->
         SELECT od.order_detail_pk, o.order_date, p.product_name, p.product_price, od.order_cnt, (p.product_price * od.order_cnt) as total_price FROM orders_detail od
         JOIN orders o

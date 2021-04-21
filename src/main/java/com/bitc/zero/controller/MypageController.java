@@ -44,7 +44,7 @@ public class MypageController {
 			
 			int customerPk =  (int) session.getAttribute("customerPk");
 			
-			List<MyPageDto> mypageInfoList = sql.selectList("myPageMapper.selectCustomerInfoList", customerPk);
+			List<MyPageDto> mypageInfoList = sql.selectList("myPageMapper.getMypageInfoList", customerPk);
 			
 			
 			mv.addObject("mypageInfoList", mypageInfoList);
