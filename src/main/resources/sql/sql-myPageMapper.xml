@@ -3,7 +3,7 @@
 <mapper namespace="myPageMapper">
 	
 	
-	<select id="selectCustomerInfoList" parameterType="String" resultType="int">
+	<select id="selectCustomerInfoList" resultType="int">
 	<!--myPageMapper.selectCustomerInfoList-->
 		SELECT customer_pk
 		FROM customers
