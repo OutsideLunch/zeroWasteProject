@@ -62,10 +62,11 @@
 								<!-- 리뷰작성부분 값 넘겨주기 구현해야함 -->
                                 <div class="modal fade" id="review">
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
+                                      <form id="reviewModalFrm">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <div class="modal-title">리뷰작성</div>
-                                                <input type="hidden" id="orderPk">
+                                                <input type="hidden" id="orderPk" name="orderDetailPk">
                                                 <!-- <input type="hidden" th:value="customerPk"> -->
                                                 <!-- <input type="hidden" th:value="${list.orderDetailPk}"> -->
                                                 <button class="close" type="button" data-dismiss="modal">&times;</button>
@@ -94,7 +95,9 @@
                                             <div class="modal-footer p-1">
                                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
                                             </div>
+                                            
                                         </div>    
+                                        </form>
                                     </div>
                                 </div>
                             </td>
@@ -119,10 +122,16 @@
 				return;
 			}
 			if(confirm('리뷰를 등록하시겠습니까?')){
+				const form = $('#reviewModalFrm')[0];
+				const formData = new FormData(form);
+				
 				$.ajax ({
 					url: "/zero/saveProductReview",
 					type: "POST",
-					data: {productReviewContents: $('#productReviewContents').val(), productReviewScore : $('#productReviewScore').val(), orderDetailPk :$('#orderPk').val()},
+					enctype: 'multipart/form-data',
+					contentType : false,
+					processData : false,
+					data: formData,
 					success: function(data) {
 						if(data == "1"){
 							alert("리뷰 등록을 완료하였습니다.");	
