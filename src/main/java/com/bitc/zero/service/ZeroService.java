@@ -58,8 +58,11 @@ public interface ZeroService {
 	//세션에 로그인된 이메일 이용하여 고객 정보 불러오기
 	JoinDto selectCustomerInfo(String customerEmail) throws Exception;
 	
-	//orders 테이블에 고객번호, 주문날짜 저장하기
-	void insertOrder(OrderDto order) throws Exception;
+	//orders 테이블에 customer_pk, order_date 저장하기
+	int insertOrder(OrderDto order) throws Exception;
+	
+	//order_detail 테이블에 order_pk 및 주문정보 저장하기
+	void insertOrderDetail(OrderDto order) throws Exception;
 
 	// 마이페이지 상세
 	List<MyPageDto> getMypageInfo(int customerPk) throws Exception;
