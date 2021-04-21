@@ -74,7 +74,7 @@ public class ZeroController {
 			
 		if (count == 1) {
 			HttpSession session = request.getSession();
-			int customerPk = sql.selectOne("myPageMapper.selectCustomerInfo", customerEmail);
+			int customerPk = sql.selectOne("myPageMapper.selectCustomerInfoList", customerEmail);
 			session.setAttribute("customerEmail", customerEmail);
 			session.setAttribute("customerPk", customerPk);
 			return true;
