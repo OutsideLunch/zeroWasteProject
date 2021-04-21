@@ -19,8 +19,8 @@
 <script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#defaultNav').load('../navbar');
-		$('footer').load('../footer');
+		$('#defaultNav').load('navbar');
+		$('footer').load('footer');
 		
 		var boardPk = $("#boardPk").val();
 		
@@ -35,16 +35,16 @@
 			$("#method").val("PUT");
 			var frm = $("#frm")[0];
 			/*컨트롤러, 서비스 등에서 추가 필요*/
-			frm.action = "/zero/ideaUpdate/"+boardPk;
+			frm.action = "/zero/ideaDetail/"+boardPk;
 			frm.submit();
 		});
 		
 		//게시글 삭제 버튼
 		$("#btnDel").on("click",function(){
-			/* $("#method").val("DELETE"); */
+			$("#method").val("DELETE");
 			var frm = $("#frm")[0];
 			/*컨트롤러, 서비스 등에서 추가 필요*/
-			frm.action = "/zero/ideaDelete/"+boardPk; 
+			frm.action = "/zero/ideaDetail/"+boardPk; 
 			frm.submit();
 		});
 	});
@@ -70,13 +70,13 @@
 					</tr>
 					<tr th:if="${#lists.size(data.file)} > 0" th:each="list : ${data.file}">
 						<td colspan="4">
-							<img th:src="${storedFilePath}">
+							<img th:src="${list.storedFilePath}">
 							<a th:href="@{/zero/downloadFile(idx=${list.idx}, boardIdx=${list.boardIdx})}" 
 							th:text="|${list.originalFileName} (${list.fileSize} kb)|"></a>
 						</td>
 					</tr>
 					<tr th:unless="${#lists.size(data.file)} > 0">
-						<td colspan="4">test</td>
+						<td colspan="4">첨부된 파일이 없습니다.</td>
 					</tr>
 					<tr>
 						<td class="mx-auto">
@@ -97,6 +97,6 @@
     </div>
     
     <!-- footer 영역 -->
-    <footer th:replace="/zero/footer" class="py-5 mt-5"></footer>
+    <footer class="py-5 mt-5"></footer>
 </body>
 </html>

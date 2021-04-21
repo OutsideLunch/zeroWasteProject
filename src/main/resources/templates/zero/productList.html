@@ -19,8 +19,8 @@
 <script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#defaultNav').load('navbar');
-		$('footer').load('footer');
+		$('#defaultNav').load('../navbar');
+		$('footer').load('../footer');
 	});
 </script>
 <style>
@@ -39,17 +39,17 @@
 	<main class="container py-5">
 		<div class="row">
 			<div class="col-sm-2 border-right">
-				<ul class="nav nav-pills d-flex flex-column" th:if="${#lists.size(categoryData)}>0" th:each="list : ${categoryData}">
-					<li class="nav-item"><a href="#" class="nav-link text-muted" th:text="${list.categoryName}"></a></li>
+				<ul class="nav nav-pills d-flex flex-column" th:if="${#lists.size(data)}>0" th:each="list : ${data}">
+					<li class="nav-item"><a href="#" class="nav-link text-muted" th:text="${list.productCategoryPk}"></a></li>
 				</ul>
 			</div>
 			<section class="col-sm-10">
-				<article class="container text-center">
-					<div class="row row-cols-3 px-3" th:if="${#lists.size(data)}>0" th:each="list : ${data}">
+				<article class="container text-center row">
+					<div class="col-sm-4 px-3" th:if="${#lists.size(data)}>0" th:each="list : ${data}">
 						<div>
-							<a href="/zero/product/" th:attrappend="href=${list.productPk}"><img th:src="@{list.storedFilePath}" alt="" width="250px"></a><br> 
+							<a href="/zero/productDetail/" th:attrappend="href=${list.productPk}"><img th:src="${list.storedFilePath}" alt="" width="250px"></a><br> 
 							<p th:text="${list.productName}"></p><span class="badge badge-success rounded-0">New</span>
-							<p th:text="${list.productPrice}원"></p>
+							<p th:text="${list.productPrice}+'원'"></p>
 						</div>
 					</div>
 				</article>

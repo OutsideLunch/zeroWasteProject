@@ -34,16 +34,20 @@
 			<div class="form-group">
                 <input type="text" id="boardTitle" name="boardTitle" placeholder="제목" class="form-control">
             </div>
-            <div class="form-group">
-                <input type="text" id="createId" name="createId" placeholder="작성자" class="form-control">
+            <div class="form-group d-flex align-items-center"> <!-- 작성자 이름 -->
+                <label for ="customerName" class="col-sm-2 m-0">작성자</label>
+                <input type="text" th:value="${data.customerName}" id="customerName" class="form-control col-sm-10" readonly>
+            </div>
+            <div class="form-group"> <!-- customerPk는 화면에는 안보이고 createId로서 param으로 넘겨주기만함 -->
+                <input type="hidden" th:value="${data.customerPk}" id="createId" name="createId" class="form-control">
             </div>
             <div class="form-group">
-                <textarea name="boardContents" id="boardContents" cols="30" rows="15" class="form-control mb-2 rounded-0" placeholder="내용"></textarea>
+                <textarea id="boardContents" name="boardContents" placeholder="내용" rows="15" class="form-control"></textarea>
             </div>
             <div class="form-group">
             	<label for="files" id="labelFile">이미지 파일을 첨부해주세요</label>
-            	<!-- 파일 첨부 input 태그. 이미지 파일 하나만 첨부하도록 함-->
-            	<input type="file" id="files" name="files" class="form-control form-control-file border-0" placeholder="파일을 추가해주세요">
+            	<!-- 파일 첨부 input 태그.-->
+            	<input type="file" id="files" name="files" multiple="multiple" class="form-control-file border-0">
             </div>
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">등록하기</button>

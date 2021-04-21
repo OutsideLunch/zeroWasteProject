@@ -21,6 +21,12 @@
 	$(document).ready(function(){
 		$('#defaultNav').load('navbar');
 		$('footer').load('footer');
+		
+		$("#btnOrder").on("click",function(){
+			//Controller의 insertOrder 실행후 alert 뜨도록 만들어야함
+			alert("주문이 완료되었습니다.");
+			window.history.back(); //해당 상품의 상세페이지로 돌아가기
+		});
 	});
 </script>
 <style>
@@ -40,15 +46,13 @@
 	        <h5>주문 정보</h5>
 	        <table class="table table-hover text-center">
 	            <colgroup>
-	                <col width="15%" />
-	                <col width="15%" />
+	                <col width="20%" />
 	                <col width="*%" />
 	                <col width="15%" />
 	                <col width="15%" />
 	            </colgroup>
 	            <thead>
 	                <tr>
-	                    <th>주문번호</th>
 	                    <th>상품 이미지</th>
 	                    <th>상품명</th>
 	                    <th>상품개수</th>
@@ -57,11 +61,10 @@
 	            </thead>
 	            <tbody>
 	                <tr>
-	                    <td th:text="${data.orderDetailPk}">1</td>
-	                    <td><img th:src="@{data.storedFilePath}" alt="" width="50px"></td>
-	                    <td th:text="${data.productName}">종이빨대</td>
-	                    <td th:text="${data.orderCnt}">10</td>
-	                    <td th:text="${sum}">20,000</td>
+	                    <td class="align-middle"><img th:src="${pData.storedFilePath}" alt="" width="60%"></td>
+	                    <td th:text="${pData.productName}" class="align-middle"></td>
+	                    <td th:text="${amount}" class="align-middle"></td>
+	                    <td th:text="${sum}" class="align-middle"></td>
 	                </tr>
 	            </tbody>
 	        </table>
@@ -77,11 +80,11 @@
                     <tbody>
                         <tr>
                             <td>주문자</td>
-                            <td th:text="${data.customerName}"></td>
+                            <td th:text="${cData.customerName}"></td>
                         </tr>
                         <tr>
                             <td>연락처</td>
-                            <td th:text="${data.customerPhone}"></td>
+                            <td th:text="${cData.customerPhone}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -90,7 +93,7 @@
                     <tbody>
                         <tr>
                             <td>주소</td>
-                            <td th:text="${data.customerAddr}"></td>
+                            <td th:text="${cData.customerAddr}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -192,10 +195,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- ajax로 넘겨줄 parameter -->
+                <input type="hidden" id="customerPk" name="customerPk" th:value="${cData.customerPk}"/>
+				<input type="hidden" id="productPk" name="productPk" th:value="${pData.productPk}"/>
+				<input type="hidden" id="amount" name="amount" th:value="${amount}"/>
+				<input type="hidden" id="sum" name="sum" th:value="${sum}"/>
                 <div class="card-footer mt-2">
                     <h1>최종결제금액</h1>
-                    <h1 class="text-right">20,000원</h1>
-                    <button class="btn btn btn-danger btn-lg btn-block" type="submit">
+                    <h1 class="text-right" th:text="${sum}+'원'"></h1>
+                    <button class="btn btn btn-danger btn-lg btn-block" id="btnOrder">
                     결제하기
                     </button>
                 </div>

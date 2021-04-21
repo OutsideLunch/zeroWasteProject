@@ -21,26 +21,9 @@
 	$(document).ready(function(){
 		$('#defaultNav').load('navbar');
 		$('footer').load('footer');
+
 	});
 </script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#btnOK").on("click", function() {
-			$.ajax({
-				url: "/zero/main",
-				type: "get",
-			success: function(data) {
-					alert("회원가입이 완료되었습니다.");
-			},
-			error: function() {
-				alert("회원가입에 실패했습니다.")
-				}
-			});
-		});
-	});
-	
-	</script>
 <style>
     ::placeholder {
         font-size: 0.8rem;
@@ -98,7 +81,7 @@
                     </div>
                 </div>
         	</div>
-			<button type="submit" class="btn btn-secondary btn-block col-sm-6 mx-auto mt-4" id="btnOK">
+			<button id="btnJoin" type="submit" class="btn btn-secondary btn-block col-sm-6 mx-auto mt-4">
 				회원가입하기
 			</button>
         </form>
