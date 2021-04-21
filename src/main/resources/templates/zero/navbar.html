@@ -6,12 +6,12 @@
            </a>
        </div>
        <ul class="nav col-sm-4 justify-content-end align-items-center" th:if="${session.customerEmail} == null">
-       	<li><a href="login" class="nav-link text-dark">로그인</a></li>
-		<li><a href="join" class="nav-link text-dark">회원가입</a></li>
+       	<li><a th:href="@{/zero/login}" class="nav-link text-dark">로그인</a></li>
+		<li><a th:href="@{/zero/join}" class="nav-link text-dark">회원가입</a></li>
        </ul>
        <ul class="nav col-sm-4 justify-content-end align-items-center" th:if="${session.customerEmail} != null">
-       	<li><a href="logout" class="nav-link text-dark">로그아웃</a></li>
-		<li><a href="getMyPageList" class="nav-link text-dark">마이페이지</a></li>
+       	<li><a th:href="@{/zero/logout}" class="nav-link text-dark">로그아웃</a></li>
+		<li><a th:href="@{/zero/getMyPageList}" class="nav-link text-dark">마이페이지</a></li>
        </ul>
 </div>
 <!-- 네비게이션바 -->
@@ -38,7 +38,7 @@
                <a href="#" class="nav-link text-dark px-4 py-1" id="dropdownMenuButton"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
                <ul class="dropdown-menu py-2 px-2" aria-labelledby="dropdownMenuButton">
-               	<li class="dropdown-item py-2"><a href="#" class="text-dark">Zero Waste Idea!</a></li>
+               	<li class="dropdown-item py-2"><a href="/zero/ideaList" class="text-dark">Zero Waste Idea!</a></li>
 			    <li class="dropdown-item py-2"><a href="#" class="text-dark">친환경 소식 나누기</a></li>
 			 </ul>
            </li>
@@ -46,7 +46,7 @@
                <a href="#" class="nav-link text-dark px-4 py-1">공지사항</a>
            </li>
            <li class="nav-item">
-               <a href="#" class="nav-link text-dark px-4 py-1">입점제안</a>
+               <a href="/zero/proposal" class="nav-link text-dark px-4 py-1">입점제안</a>
            </li>
        </ul>
 </nav>
