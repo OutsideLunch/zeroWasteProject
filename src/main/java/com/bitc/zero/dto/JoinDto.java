@@ -2,7 +2,6 @@ package com.bitc.zero.dto;
 
 import lombok.Data;
 
-// 회원가입 페이지 
 @Data
 public class JoinDto {
 	private int customerPk;

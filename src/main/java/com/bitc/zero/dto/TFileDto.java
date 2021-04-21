@@ -8,14 +8,10 @@ public class TFileDto {
 	private int boardIdx;
 	private String originalFileName;
 	private String storedFilePath;
-	private long fileSize;
-	private String createdId;
-	private String createdDatetime;
-	private String updatedId;
-	private String updatedDatetime;
+	private long FileSize; //크기가 커서 int가 아니라 long으로 해야함
+	private String createId;
+	private String createDatetime;
 	private String deletedYn;
-	private int productPk;
-	private int productReviewPk;
 	private int boardPk;
-	
+	private int productReviewPk;
 }

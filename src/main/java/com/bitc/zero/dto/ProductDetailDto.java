@@ -4,13 +4,14 @@ import java.util.List;
 
 import lombok.Data;
 
-// 상품 상세페이지
 @Data
 public class ProductDetailDto {
-	List<ReviewDto> review;
-	List<TFileDto> file;
 	private int productPk;
 	private int partnerPk;
-
-	
+	private String productName;
+	private String partnerName;
+	private int productPrice;
+	private String storedFilePath; //상품 대표 이미지
+	private String storedDescFilePath; //상품 설명 이미지
+	private List<ReviewDto> review;
 }
