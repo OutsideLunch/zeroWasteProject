@@ -11,5 +11,4 @@ public class ProposalDto {
 	private String replaceProduct;
 	private String productMaterial;
 	private String packagingMaterial;
-
 }
