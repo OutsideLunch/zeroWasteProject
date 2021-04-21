@@ -283,17 +283,20 @@
 			INSERT INTO orders 
 				(customer_pk)
 			VALUES 
-				(#{customerPK})
+				(#{customerPk})
 		]]>
+		<selectKey keyProperty="orderPk" resultType="int">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
 	</insert>
 	
-	<!-- xml에만 작성해둔 상태. order_detail 테이블에 데이터 넣으려면 order_pk는 어디서 받아오나? -->
+	<!-- order_detail 테이블 저장하기 -->
 	<insert id="insertOrderDetail" parameterType="com.bitc.zero.dto.OrderDto" useGeneratedKeys="true" keyProperty="orderDetailPk">
 		<![CDATA[
 			INSERT INTO orders_detail 
 				(order_pk, product_pk, order_cnt, order_sum) 
 			VALUES 
-				('1', '1', '3', '3') 못하겠는 부분..!
+				(#{orderPk}, #{productPk}, #{amount}, #{sum})
 		]]>
 	</insert>
 	

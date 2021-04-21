@@ -10,13 +10,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import com.bitc.zero.common.FileUtil;
 
 import com.bitc.zero.dto.MyPageDto;
 import com.bitc.zero.dto.ReviewDto;
+import com.bitc.zero.dto.TFileDto;
+import com.bitc.zero.mapper.ZeroMapper;
 import com.bitc.zero.service.ZeroService;
 
 @Controller
@@ -27,13 +32,19 @@ public class MypageController {
 	@Autowired
 	protected SqlSession sql;
 	
+	@Autowired
+	private ZeroMapper zeroMapper;
+	
+	@Autowired
+	private FileUtil fileUtil;
+	
 	//	마이페이지 -> 주문목록
 		@RequestMapping(value="/zero/getMyPageList", method=RequestMethod.GET)
 		public ModelAndView myPage(HttpServletRequest req) throws Exception{
 			ModelAndView mv = new ModelAndView();
 			HttpSession session = req.getSession();
 			try {
-				if(session.getAttribute("customerPk").toString() == null) {
+				if((String)session.getAttribute("customerEmail") == null) {
 					mv.setViewName("/zero/main");
 					
 					return mv;
@@ -56,7 +67,7 @@ public class MypageController {
 		// 마이페이지 -> 상품후기등록
 		@ResponseBody
 		@RequestMapping(value="/zero/saveProductReview", method=RequestMethod.POST)
-		public String postProductReview(ReviewDto dto, HttpServletRequest req) {
+		public String postProductReview(ReviewDto dto, HttpServletRequest req, MultipartHttpServletRequest uploadFiles) {
 			//MultipartHttpServletRequest uploadFiles
 			//zeroService.postProductReview(dto, uploadFiles);
 			try {
@@ -67,7 +78,14 @@ public class MypageController {
 				logger.info("param3 ::"+dto.getOrderDetailPk());
 				logger.info("param4 ::"+dto.getCustomerPk());
 				
-				sql.insert("myPageMapper.insertProductReview", dto);
+				int lastPk = sql.insert("myPageMapper.insertProductReview", dto);
+				logger.info("lastPk :::"+lastPk);
+				
+//				List<TFileDto> fileList = fileUtil.parseFileInfo(0, uploadFiles, dto.getProductReviewPk());
+//				
+//				if (CollectionUtils.isEmpty(fileList) == false) {
+//					zeroMapper.insertIdeaFile(fileList);
+//				}
 			} catch (Exception e) {
 				logger.warn("productInsert Error :::"+e);
 				

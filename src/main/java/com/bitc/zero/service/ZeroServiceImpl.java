@@ -136,8 +136,13 @@ public class ZeroServiceImpl implements ZeroService {
 
 	// orders 테이블에 고객번호, 주문날짜 저장하기
 	@Override
-	public void insertOrder(OrderDto order) throws Exception {
-		zeroMapper.insertOrder(order);
+	public int insertOrder(OrderDto order) throws Exception {
+		return zeroMapper.insertOrder(order);
+	}
+	
+	//order_detail 테이블에 order_pk 및 주문정보 저장하기
+	public void insertOrderDetail(OrderDto order) throws Exception{
+		zeroMapper.insertOrderDetail(order);
 	}
 
 	// 마이페이지 정보

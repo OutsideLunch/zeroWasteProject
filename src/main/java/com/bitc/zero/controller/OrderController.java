@@ -45,11 +45,19 @@ public class OrderController {
 	}
 	
 	//결제하기 버튼 클릭시 DB에 저장하기
-	@RequestMapping(value="/zero/order", method=RequestMethod.POST)
+	@RequestMapping(value="/zero/insertOrder", method=RequestMethod.POST)
 	public String insertOrder(OrderDto order) throws Exception{
 		
-		zeroService.insertOrder(order);
+		int orderPk = zeroService.insertOrder(order);
 		
-		return "insertOrderDetail 만들다가 OrderPk를 가져오는 방법에서 막혔음";
+		//xml에서 LAST_INSERT_ID()로 가져옴
+		order.setOrderPk(orderPk);
+		
+		//order_detail 테이블에 order_pk 및 주문정보 저장하기
+		zeroService.insertOrderDetail(order);
+		
+		String result = "주문이 완료되었습니다.";
+		
+		return result;
 	}
 }

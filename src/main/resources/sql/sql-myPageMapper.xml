@@ -39,10 +39,24 @@
 		<!-- myPageMapper.insertProductReview -->
 		<![CDATA[ 
 			INSERT INTO 
-				product_review (order_detail_pk, customer_pk, product_review_contents, product_review_score)
+				product_review (
+								order_detail_pk			, 
+								customer_pk				, 
+								product_review_contents	, 
+								product_review_score	, 
+								product_review_write_yn
+								)
 			VALUE
-				(#{orderDetailPk}, #{customerPk}, #{productReviewContents}, #{productReviewScore})
+								(
+								#{orderDetailPk}		,
+								#{customerPk}			, 
+								#{productReviewContents}, 
+								#{productReviewScore}	,
+								'Y'
+								)
 			]]>
+        		<!-- SELECT MAX(PRODUCT_REVIEW_PK)+1 FROM PRODUCT_REVIEW -->
+
 	</insert>
 	
 	<insert id="postProductReviewImg" parameterType="com.bitc.zero.dto.TFileDto">

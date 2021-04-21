@@ -24,8 +24,17 @@
 		
 		$("#btnOrder").on("click",function(){
 			//Controller의 insertOrder 실행후 alert 뜨도록 만들어야함
-			alert("주문이 완료되었습니다.");
-			window.history.back(); //해당 상품의 상세페이지로 돌아가기
+			$.ajax({
+				url: "/zero/insertOrder",
+				type: "POST",
+				success: function(result){
+					alert(result);
+					window.history.back(); //해당 상품의 상세페이지로 돌아가기
+				},
+				error : function(){
+					alert("ajax 통신 오류");
+				}
+			});
 		});
 	});
 </script>
