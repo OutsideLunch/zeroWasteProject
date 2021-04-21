@@ -25,9 +25,6 @@ public class MypageController {
 	protected static final Logger logger = LogManager.getLogger(MypageController.class);
 	
 	@Autowired
-	private ZeroService zeroService;
-	
-	@Autowired
 	protected SqlSession sql;
 	
 	//	마이페이지 -> 주문목록
@@ -42,12 +39,12 @@ public class MypageController {
 					return mv;
 				}
 			} catch (Exception e) {
-				logger.warn("::::session error");
+				logger.warn("::::session error"+e);
 			}
 			
 			int customerPk =  (int) session.getAttribute("customerPk");
 			
-			List<MyPageDto> mypageInfoList = zeroService.getMypageInfo(customerPk);
+			List<MyPageDto> mypageInfoList = sql.selectList("myPageMapper.selectCustomerInfoList", customerPk);
 			
 			
 			mv.addObject("mypageInfoList", mypageInfoList);
@@ -59,18 +56,22 @@ public class MypageController {
 		// 마이페이지 -> 상품후기등록
 		@ResponseBody
 		@RequestMapping(value="/zero/saveProductReview", method=RequestMethod.POST)
-		public String postProductReview(ReviewDto dto, HttpServletRequest req) throws Exception {
+		public String postProductReview(ReviewDto dto, HttpServletRequest req) {
 			//MultipartHttpServletRequest uploadFiles
 			//zeroService.postProductReview(dto, uploadFiles);
-			
-			HttpSession session = req.getSession();
-			dto.setCustomerPk((int)session.getAttribute("customerPk"));
-			logger.info("param1 ::"+dto.getProductReviewContents());
-			logger.info("param2 ::"+dto.getProductReviewScore());
-			logger.info("param3 ::"+dto.getOrderDetailPk());
-			logger.info("param4 ::"+dto.getCustomerPk());
-			
-			sql.insert("myPageMapper.insertProductReview", dto);
+			try {
+				HttpSession session = req.getSession();
+				dto.setCustomerPk((int)session.getAttribute("customerPk"));
+				logger.info("param1 ::"+dto.getProductReviewContents());
+				logger.info("param2 ::"+dto.getProductReviewScore());
+				logger.info("param3 ::"+dto.getOrderDetailPk());
+				logger.info("param4 ::"+dto.getCustomerPk());
+				
+				sql.insert("myPageMapper.insertProductReview", dto);
+			} catch (Exception e) {
+				logger.warn("productInsert Error :::"+e);
+				
+			}
 			
 			return "1";
 		}

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +16,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitc.zero.dto.CategoryDto;
+import com.bitc.zero.dto.MyPageDto;
 import com.bitc.zero.service.ZeroService;
 
 
 @Controller
 public class ZeroController {
+	
 	@Autowired
 	private ZeroService zeroService;
+	
+	@Autowired
+	protected SqlSession sql;
+	
+	//루트 진입시 메인화면
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String zeroMaiRootn() throws Exception{
+		return "redirect:/zero/main";
+	}
 	
 	//메인화면 가져오기
 	@RequestMapping(value="/zero/main", method=RequestMethod.GET)
@@ -62,7 +74,9 @@ public class ZeroController {
 			
 		if (count == 1) {
 			HttpSession session = request.getSession();
+			int customerPk = sql.selectOne("myPageMapper.selectCustomerInfo", customerEmail);
 			session.setAttribute("customerEmail", customerEmail);
+			session.setAttribute("customerPk", customerPk);
 			return true;
 		}
 		else {

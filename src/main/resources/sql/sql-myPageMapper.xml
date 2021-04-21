@@ -2,6 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="myPageMapper">
 	
+	
+	<select id="selectCustomerInfoList" resultType="int">
+	<!--myPageMapper.selectCustomerInfoList-->
+		SELECT customer_pk
+		FROM customers
+		WHERE customer_email = #{customerEmail}
+	</select>
+	
+	<!--mypageList-->
+    <select id="getMypageInfo" parameterType="int" resultType="com.bitc.zero.dto.MyPageDto">
+    <!--myPageMapper.getMypageInfo-->
+        SELECT od.order_detail_pk, o.order_date, p.product_name, p.product_price, od.order_cnt, (p.product_price * od.order_cnt) as total_price FROM orders_detail od
+        JOIN orders o
+        ON od.order_pk = o.order_pk        
+        JOIN product p
+        ON p.product_pk = od.product_pk
+        WHERE o.customer_pk=#{customerPk}
+            
+    </select>
+	
 	<select id="productReview" resultType="com.bitc.zero.dto.ReviewDto">
 		<![CDATA[ 
 			SELECT 
