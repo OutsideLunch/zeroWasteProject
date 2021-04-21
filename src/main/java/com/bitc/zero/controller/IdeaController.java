@@ -49,6 +49,7 @@ public class IdeaController {
 		
 		BoardDto data = zeroService.selectIdeaDetail(boardPk);
 		mv.addObject("data", data);
+		mv.addObject("storedFilePath", data.getFile().get(0).getStoredFilePath());
 		
 		return mv;
 	}

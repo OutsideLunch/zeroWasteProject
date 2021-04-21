@@ -259,7 +259,7 @@
 			UPDATE
             	board
          	SET
-            	board.title = #{boardTitle}, board.contents = #{boardContents}
+            	board_title = #{boardTitle}, board_contents = #{boardContents}
          	WHERE
             	board_pk = #{boardPk}
 		]]>
