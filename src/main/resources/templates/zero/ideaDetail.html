@@ -19,8 +19,8 @@
 <script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#defaultNav').load('navbar');
-		$('footer').load('footer');
+		$('#defaultNav').load('../navbar');
+		$('footer').load('../footer');
 		
 		var boardPk = $("#boardPk").val();
 		
@@ -70,7 +70,7 @@
 					</tr>
 					<tr th:if="${#lists.size(data.file)} > 0" th:each="list : ${data.file}">
 						<td colspan="4">
-							<img th:src="${list.storedFilePath}">
+							<img th:src="@{${list.storedFilePath}}">
 							<a th:href="@{/zero/downloadFile(idx=${list.idx}, boardIdx=${list.boardIdx})}" 
 							th:text="|${list.originalFileName} (${list.fileSize} kb)|"></a>
 						</td>
