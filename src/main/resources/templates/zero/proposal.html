@@ -23,6 +23,14 @@
 		$('footer').load('footer');
 	});
 </script>
+   <script>
+	$(document).ready(function(){
+		$('#submitBtn').click(function() {
+			alert("제안해주셔서 감사합니다. 제출이 완료됐습니다.");
+		});
+	});
+   </script>
+
 <style>
     
 
@@ -43,28 +51,28 @@
         <form action="" method="POST" class="text-center"  enctype="multipart/form-data">
         	<div class="container col-sm-8 mx-auto">
         		<div class="form-group d-flex row align-items-center">
-	                <label for="userEmail" class="col-sm-4 p-0 m-0">단체명</label>
-	                <input type="text" id="userEmail" name="userEmail" class="form-control col-sm-8 text-center" placeholder="id@example.com">
+	                <label for="partnerName" class="col-sm-4 p-0 m-0">단체명</label>
+	                <input type="text" id="partnerName" name="partnerName" class="form-control col-sm-8 text-center" placeholder="단체명을 입력해하세요">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
-	         		<label for="userPw" class="col-sm-4 p-0 m-0">단체 소개 링크</label>
-					<input type="password" id="userPw" name="userPw" class="form-control col-sm-8 text-center"   placeholder="8자리 이상 대소문자와 특수문자 사용">
+	         		<label for="partnersLink" class="col-sm-4 p-0 m-0">단체 소개 링크</label>
+					<input type="text" id="partnersLink" name="partnersLink" class="form-control col-sm-8 text-center"   placeholder="단체 소개 링크를 입력하세요">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
-	         		<label for="pwCheck" class="col-sm-4 p-0 m-0">제품명</label>
-					<input type="password" id="pwCheck" name="pwCheck" class="form-control col-sm-8 text-center"   placeholder="입력하신 비밀번호를 확인하세요">
+	         		<label for="productName" class="col-sm-4 p-0 m-0">제품명</label>
+					<input type="text" id="productName" name="productName" class="form-control col-sm-8 text-center"   placeholder="제품명을 입력하세요">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
-	         		<label for="userName" class="col-sm-4 p-0 m-0">무엇을 대체하는 상품인가요?</label>
-					<input type="text" id="userName" name="userName" class="form-control col-sm-8 text-center"   placeholder="이름을 입력하세요">
+	         		<label for="replaceProduct" class="col-sm-4 p-0 m-0">무엇을 대체하는 상품인가요?</label>
+					<input type="text" id="replaceProduct" name="replaceProduct" class="form-control col-sm-8 text-center"   placeholder="무엇을 대체하는 상품인가요?">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
-	         		<label for="userPhone" class="col-sm-4 p-0 m-0">재품의 재질은 무엇인가요?</label>
-					<input type="text" id="userPhone" name="userPhone" class="form-control col-sm-8 text-center"   placeholder="휴대전화 번호를 입력하세요">
+	         		<label for="productMaterial" class="col-sm-4 p-0 m-0">재품의 재질은 무엇인가요?</label>
+					<input type="text" id="productMaterial" name="productMaterial" class="form-control col-sm-8 text-center"   placeholder="재품의 재질은 무엇인가요?">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
-	         		<label for="userAddress" class="col-sm-4 p-0 m-0">포장 재질은 무엇인가요?</label>
-					<input type="text" id="userAddress" name="userAddress" class="form-control col-sm-8 text-center"   placeholder="배송지로 사용할 주소를 입력하세요">
+	         		<label for="packagingMaterial" class="col-sm-4 p-0 m-0">포장 재질은 무엇인가요?</label>
+					<input type="text" id="packagingMaterial" name="packagingMaterial" class="form-control col-sm-8 text-center"   placeholder="포장 재질은 무엇인가요?">
 	            </div>
 	            <div class="form-group col-sm-8 mx-auto pt-3">
                     <label for="" class="form-label">
@@ -79,7 +87,7 @@
                     </div>
                 </div>
         	</div>
-			<button type="submit" class="btn btn-secondary btn-block col-sm-6 mx-auto">
+			<button type="submit" id="submitBtn" class="btn btn-secondary btn-block col-sm-6 mx-auto">
 				제출하기
 			</button>
         </form>

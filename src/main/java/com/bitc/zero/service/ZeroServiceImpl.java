@@ -15,6 +15,7 @@ import com.bitc.zero.dto.MyPageDto;
 import com.bitc.zero.dto.OrderDto;
 import com.bitc.zero.dto.ProductDetailDto;
 import com.bitc.zero.dto.ProductListDto;
+import com.bitc.zero.dto.ProposalDto;
 import com.bitc.zero.dto.ReviewDto;
 import com.bitc.zero.dto.TFileDto;
 import com.bitc.zero.mapper.ZeroMapper;
@@ -159,6 +160,18 @@ public class ZeroServiceImpl implements ZeroService {
 			zeroMapper.postProductReviewImg(fileList);
 		}
 	}
+	
+	// 입점제안 정보 DB에 입력
+		@Override
+		public void insertProposal(ProposalDto proposal, MultipartHttpServletRequest uploadFiles) throws Exception {
+			zeroMapper.insertProposal(proposal);
+			
+			List<TFileDto> fileList = fileUtil.parseFileInfo(proposal.getPartnerPk(), uploadFiles);
+
+			if (CollectionUtils.isEmpty(fileList) == false) {
+				zeroMapper.insertProposalFile(fileList);
+			}
+		}
 	
 }
 	

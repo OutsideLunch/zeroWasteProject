@@ -12,6 +12,7 @@ import com.bitc.zero.dto.MyPageDto;
 import com.bitc.zero.dto.OrderDto;
 import com.bitc.zero.dto.ProductDetailDto;
 import com.bitc.zero.dto.ProductListDto;
+import com.bitc.zero.dto.ProposalDto;
 import com.bitc.zero.dto.ReviewDto;
 import com.bitc.zero.dto.TFileDto;
 
@@ -76,4 +77,8 @@ public interface ZeroMapper {
 	void postProductReview(ReviewDto review) throws Exception;
 	void postProductReviewImg(List<TFileDto> fileList) throws Exception;
 	
+	// 입점제안정보 DB에 입력
+		void insertProposal(ProposalDto proposal) throws Exception;
+	// 입점제안 파일 입력
+		void insertProposalFile(List<TFileDto> fileList) throws Exception;
 }

@@ -11,6 +11,7 @@ import com.bitc.zero.dto.MyPageDto;
 import com.bitc.zero.dto.OrderDto;
 import com.bitc.zero.dto.ProductDetailDto;
 import com.bitc.zero.dto.ProductListDto;
+import com.bitc.zero.dto.ProposalDto;
 import com.bitc.zero.dto.ReviewDto;
 import com.bitc.zero.dto.TFileDto;
 
@@ -64,5 +65,9 @@ public interface ZeroService {
 	List<MyPageDto> getMypageInfo(int customerPk) throws Exception;
 
 	void postProductReview(ReviewDto review, MultipartHttpServletRequest uploadFiles) throws Exception;
+	
+	// 입점제안 정보 DB에 입력
+		public void insertProposal(ProposalDto proposal, MultipartHttpServletRequest uploadFiles) throws Exception;
+
 
 }
