@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,7 +95,7 @@ public class FileUtil {
 		return fileList;
 	}
 	
-	public List<TFileDto> parseReviewFileInfo(int productReviewIdx, MultipartHttpServletRequest uploadFiles) throws Exception {
+	public List<TFileDto> parseReviewFileInfo(int productReviewIdx, MultipartHttpServletRequest uploadFiles, int customerPk) throws Exception {
 //		업로드된 파일이 존재하는지 여부 확인
 		if (ObjectUtils.isEmpty(uploadFiles)) {
 			return null;
@@ -155,6 +158,7 @@ public class FileUtil {
 					productReviewFile.setFileSize(multiFile.getSize());
 					productReviewFile.setOriginalFileName(multiFile.getOriginalFilename());
 					productReviewFile.setStoredFilePath(path + "/" + newFileName);
+					productReviewFile.setCreateId(customerPk);
 					fileList.add(productReviewFile);
 					
 //					서버에 업로드된 파일을 실제로 저장

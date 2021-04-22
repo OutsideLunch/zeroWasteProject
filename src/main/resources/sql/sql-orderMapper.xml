@@ -10,7 +10,7 @@
 			VALUES 
 				(#{customerPk})
 		]]>
-		<selectKey keyProperty="orderPk" resultType="int">
+		<selectKey keyProperty="orderPk" resultType="Integer">
         	SELECT LAST_INSERT_ID()
     	</selectKey>
 	</insert>

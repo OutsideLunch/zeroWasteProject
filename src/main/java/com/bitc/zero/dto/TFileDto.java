@@ -9,7 +9,7 @@ public class TFileDto {
 	private String originalFileName;
 	private String storedFilePath;
 	private long FileSize; //크기가 커서 int가 아니라 long으로 해야함
-	private String createId;
+	private int createId;
 	private String createDatetime;
 	private String deletedYn;
 	private int boardPk;

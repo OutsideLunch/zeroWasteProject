@@ -37,10 +37,15 @@ public class ProductController {
 		ModelAndView mv = new ModelAndView("/zero/productDetail");
 		
 		ProductDetailDto pd = sql.selectOne("productMapper.selectProductDetail", productPk);
+		
+		// 상품 상세 설명 이미지 경로 가져오기
+		String descPath = sql.selectOne("productMapper.selectProductDesc",productPk);
+		pd.setStoredDescFilePath(descPath);
+
 		mv.addObject("data", pd);
 		
 		//리뷰
-		ReviewDto rd = sql.selectOne("productMapper.selectReviewList", productPk);
+		List<ReviewDto> rd = sql.selectList("productMapper.selectReviewList", productPk);
 		mv.addObject("reviewData", rd);
 		
 		return mv;

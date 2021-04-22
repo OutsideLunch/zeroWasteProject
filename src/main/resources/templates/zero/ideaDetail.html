@@ -64,18 +64,18 @@
 							<input type="text" id="boardTitle" name="boardTitle" th:value="${data.boardTitle}" class="form-control text-center">
 						</td>
 					</tr>
-					<tr class="d-flex justify-content-center">
-						<td>작성자</td>
+					<tr class="d-flex justify-content-center bg-light mb-2">
+						<td>작성자 : </td>
 						<td th:text="${data.customerName}"></td>
 					</tr>
-					<tr th:if="${#lists.size(data.file)} > 0" th:each="list : ${data.file}">
+					<tr th:if="${#lists.size(data.file)} > 0" th:each="list : ${data.file}" class="text-center bg-light">
 						<td colspan="4" >
-							<img th:src="@{${list.storedFilePath}}">
+							<img th:src="@{${list.storedFilePath}}" class="row mx-auto" width="30%">
 							<a th:href="@{/zero/downloadFile(idx=${list.idx}, boardIdx=${list.boardIdx})}" 
 							th:text="|${list.originalFileName} (${list.fileSize} kb)|"></a>
 						</td>
 					</tr>
-					<tr th:unless="${#lists.size(data.file)} > 0">
+					<tr th:unless="${#lists.size(data.file)} > 0" class="text-center bg-light">
 						<td colspan="4">첨부된 파일이 없습니다.</td>
 					</tr>
 					<tr>
