@@ -69,7 +69,10 @@ public interface ZeroMapper {
 	JoinDto selectCustomerInfo(String customerEmail) throws Exception;
 
 	// orders 테이블에 고객번호, 주문날짜 저장하기
-	void insertOrder(OrderDto order) throws Exception;
+	int insertOrder(OrderDto order) throws Exception;
+	
+	//order_detail 테이블에 order_pk 및 주문정보 저장하기
+	void insertOrderDetail(OrderDto order) throws Exception;
 
 	// 마이페이지 상세
 	List<MyPageDto> getMypageInfo(@Param("customerPk") int customerPk) throws Exception;
