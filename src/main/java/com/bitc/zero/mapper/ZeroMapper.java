@@ -104,4 +104,8 @@ public interface ZeroMapper {
 
 	// 공지사항 글 삭제
 	void noticeDelete(int boardPk) throws Exception;
+	
+	// 세션생성 하여 관리자 번호 가져옴
+	JoinDto selectAdminInfoYn(@Param("adminYn") String adminYn, @Param("customerEmail") String customerEmail) throws Exception;
+	
 }

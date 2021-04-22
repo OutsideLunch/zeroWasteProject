@@ -11,4 +11,5 @@ public class JoinDto {
 	private String customerName;
 	private String customerGender;
 	private String customerPhone;
+	private String adminYn;
 }

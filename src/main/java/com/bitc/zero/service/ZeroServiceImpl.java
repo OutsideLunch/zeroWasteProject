@@ -221,5 +221,10 @@ public class ZeroServiceImpl implements ZeroService {
 	public void noticeDelete(int boardPk) throws Exception {
 		zeroMapper.noticeDelete(boardPk);
 	}
+	
+	// 세션생성 하여 관리자 번호 가져옴
+	public JoinDto selectAdminInfoYn(String adminYn, String customerEmail) throws Exception {
+		return zeroMapper.selectAdminInfoYn(adminYn, customerEmail);
+	}
 
 }

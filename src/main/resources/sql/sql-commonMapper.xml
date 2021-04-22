@@ -16,7 +16,19 @@
 	<select id="selectCustomerInfo" parameterType="String" resultType="com.bitc.zero.dto.JoinDto">
 		<![CDATA[
 			SELECT
-				customer_pk, customer_name, customer_phone, customer_addr
+				customer_pk, customer_name, customer_phone, customer_addr, admin_yn
+			FROM
+				customers
+			WHERE
+				customer_email = #{customerEmail}
+		]]>
+	</select>
+	
+	<!-- 세션에 로그인된 이메일 이용하여 관리자 판별 -->
+	<select id="selectAdminInfoYn" parameterType="int" resultType="com.bitc.zero.dto.JoinDto">
+		<![CDATA[
+			SELECT
+				customer_pk, customer_email, customer_name, customer_phone, customer_addr, admin_yn
 			FROM
 				customers
 			WHERE
