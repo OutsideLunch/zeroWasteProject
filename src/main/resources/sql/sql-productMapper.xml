@@ -72,7 +72,7 @@
 	<select id="selectReviewList" parameterType="int" resultType="com.bitc.zero.dto.ReviewDto">
 		<![CDATA[
 			SELECT 
-				pr.product_pk, product_review_title, customer_name, 
+				pr.product_pk, customer_name, 
 				product_review_contents, product_review_score, 
 				stored_file_path
 			FROM 

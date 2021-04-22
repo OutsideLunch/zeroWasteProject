@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class ReviewDto {
 	// 후기 입력 출력 Dto
-	private String productReviewTitle;
 	private int productPk;
 	private int customerPk;
 	private String customerName;
