@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitc.zero.dto.CategoryDto;
+import com.bitc.zero.dto.JoinDto;
 import com.bitc.zero.dto.MyPageDto;
 import com.bitc.zero.service.ZeroService;
 
@@ -46,7 +47,7 @@ public class ZeroController {
 	public ModelAndView zeroNavbar() throws Exception{
 		ModelAndView mv = new ModelAndView("/zero/navbar");
 		
-		List<CategoryDto> list = zeroService.selectProductCategoryList();
+		List<CategoryDto> list = sql.selectList("commonMapper.selectProductCategoryList");
 		mv.addObject("productCategoryData",list);
 		return mv;
 	}
@@ -67,10 +68,13 @@ public class ZeroController {
 	@ResponseBody //view가 아니라 값 반환
 	@RequestMapping(value="zero/loginCheck", method=RequestMethod.POST)
 	public boolean loginCheck(@RequestParam Map<String, String> param, HttpServletRequest request) throws Exception {
-		String customerEmail = param.get("customerEmail");
-		String customerPw = param.get("customerPw");
 		
-		int count = zeroService.selectCustomerInfoYn(customerEmail, customerPw);
+		JoinDto dto = new JoinDto();
+		String customerEmail = param.get("customerEmail");
+		dto.setCustomerPw(param.get("customerPw"));
+		dto.setCustomerEmail(customerEmail);
+		
+		int count = sql.selectOne("loginMapper.selectCustomerInfoYn", dto);
 			
 		if (count == 1) {
 			HttpSession session = request.getSession();

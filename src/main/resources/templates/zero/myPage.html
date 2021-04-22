@@ -59,7 +59,9 @@
                             <td th:text="${list.totalPrice}+원"></td>
                             <td>
                                 <button class="btn btn-success" type="button" th:onclick="|reviewClick(${list.orderDetailPk},${list.productPk})|" data-toggle="modal" data-target="#review">리뷰작성</button>
+                                <button class="btn-dark" type="button" th:onclick="|reviewClick(${list.orderDetailPk},${list.productPk})|" data-toggle="modal" data-target="#review">리뷰작성</button>
 								<!-- 리뷰작성부분 값 넘겨주기 구현해야함 -->
+								<!-- Modal -->
                                 <div class="modal fade" id="review">
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
                                       <form id="reviewModalFrm">
@@ -76,7 +78,7 @@
                                                 <textarea name="productReviewContents" id="productReviewContents" cols="30" rows="8" class="form-control mb-2 rounded-0" placeholder="내용"></textarea>
                                                 <div class="d-flex">
                                                     <div class="flex-fill p-1">
-                                                        <input type="file" name="files" class="form-control form-control-file border-0" placeholder="파일을 추가해주세요">    
+                                                        <input type="file" id="files" name="files" class="form-control form-control-file border-0" placeholder="파일을 추가해주세요">    
                                                     </div>
                                                     <div class="flex-fill mt-1">
                                                         <select class="form-control border-0" id="productReviewScore" name="productReviewScore">
@@ -101,6 +103,7 @@
                                         </form>
                                     </div>
                                 </div>
+                                <!-- // Modal -->
                             </td>
                         </tr>
                     </tbody>
@@ -135,7 +138,8 @@
 					data: formData,
 					success: function(data) {
 						if(data == "1"){
-							alert("리뷰 등록을 완료하였습니다.");	
+							alert("리뷰 등록을 완료하였습니다.");
+							$('#review').modal('hide');
 							
 						}else{
 							alert("리뷰등록을 실패하였습니다 다시 등록해주세요.");
@@ -153,6 +157,13 @@
 	function reviewClick(orderPk , productPk){
 		document.querySelector('#orderPk').value = orderPk;
 		document.querySelector('#productPk').value = productPk;
+		modalClear();
+	}
+	
+	function modalClear(){
+		document.querySelector('#productReviewContents').value  = '';
+		document.querySelector('#productReviewScore').value  = 0;
+		document.querySelector('#files').value = ''; 
 	}
 </script>
 </body>
