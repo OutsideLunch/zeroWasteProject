@@ -2,6 +2,7 @@ package com.bitc.zero.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,19 +13,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bitc.zero.dto.ProductDetailDto;
 import com.bitc.zero.dto.ProductListDto;
 import com.bitc.zero.dto.ReviewDto;
-import com.bitc.zero.service.ZeroService;
 
 @Controller
 public class ProductController {
 	@Autowired
-	private ZeroService zeroService;
+	protected SqlSession sql;
 	
 	//상품 전체 목록 페이지 가져오기 (카테고리별로 가져오기 구현해야함!)
 	@RequestMapping(value="/zero/productList/{productCategoryPk}", method=RequestMethod.GET)
 	public ModelAndView productList(@PathVariable("productCategoryPk") int productCategoryPk) throws Exception{
 		ModelAndView mv = new ModelAndView("/zero/productList");
 		
-		List<ProductListDto> list = zeroService.selectProductList(productCategoryPk);
+		List<ProductListDto> list = sql.selectList("productMapper.selectProductList", productCategoryPk);
 		
 		mv.addObject("data",list);
 		
@@ -36,11 +36,11 @@ public class ProductController {
 	public ModelAndView productDetail(@PathVariable("productPk") int productPk) throws Exception{
 		ModelAndView mv = new ModelAndView("/zero/productDetail");
 		
-		ProductDetailDto pd = zeroService.selectProductDetail(productPk);
+		ProductDetailDto pd = sql.selectOne("productMapper.selectProductDetail", productPk);
 		mv.addObject("data", pd);
 		
 		//리뷰
-		ReviewDto rd = zeroService.selectReviewList(productPk);
+		ReviewDto rd = sql.selectOne("productMapper.selectReviewList", productPk);
 		mv.addObject("reviewData", rd);
 		
 		return mv;
