@@ -57,7 +57,7 @@ public class OrderController {
 		order.setOrderCnt(Integer.parseInt(param.get("orderCnt")));
 		order.setOrderSum(Integer.parseInt(param.get("orderSum")));
 		
-		int orderPk = sql.selectOne("orderMapper.insertOrder",order);
+		int orderPk = sql.insert("orderMapper.insertOrder",order);
 		
 		//xml에서 LAST_INSERT_ID()로 가져옴
 		order.setOrderPk(orderPk);
