@@ -90,8 +90,8 @@
 			<input type="hidden" id="method" name="_method"/>
 			<div class="d-flex flex-rows justify-content-end">
 				<button type="button" class="btn btn-primary" id="btnList">목록으로</button>
-				<button type="button" class="btn btn-success ml-2" id="btnEdit">수정하기</button>
-				<button type="button" class="btn btn-danger ml-2" id="btnDel">삭제하기</button>
+				<button type="button" class="btn btn-success ml-2" id="btnEdit" th:if="${customerPk} == ${data.createId}">수정하기</button>
+				<button type="button" class="btn btn-danger ml-2" id="btnDel" th:if="${customerPk} == ${data.createId}">삭제하기</button>
 			</div>
 		</form>
     </div>

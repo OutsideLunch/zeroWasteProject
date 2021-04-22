@@ -28,7 +28,7 @@
 	<select id="selectIdeaDetail" parameterType="int" resultType="com.bitc.zero.dto.BoardDto">
 		<![CDATA[ 
 			SELECT 
-				board_pk, board_title, board_contents, customer_name
+				board_pk, board_title, board_contents, customer_name, create_id
 			FROM 
 				board b
 			JOIN

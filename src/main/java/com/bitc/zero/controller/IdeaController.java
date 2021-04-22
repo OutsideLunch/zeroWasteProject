@@ -48,14 +48,17 @@ public class IdeaController {
 		CategoryDto cate = sql.selectOne("ideaMapper.selectBoardCategoryList",2); // 카테고리 : 2 ,공지사항 : 1
 		mv.addObject("data", list);
 		mv.addObject("cate", cate);
-		
+
 		return mv;
 	}
 	
 	// 커뮤니티 상세 페이지
 	@RequestMapping(value="/zero/ideaDetail/{boardPk}", method=RequestMethod.GET)
-	public ModelAndView ideaDetail(@PathVariable("boardPk") int boardPk) throws Exception {
+	public ModelAndView ideaDetail(@PathVariable("boardPk") int boardPk, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("/zero/ideaDetail");
+		
+		HttpSession session = request.getSession();
+		int customerPk = (int)session.getAttribute("customerPk");
 		
 		BoardDto data = sql.selectOne("ideaMapper.selectIdeaDetail",boardPk);
 
@@ -64,6 +67,7 @@ public class IdeaController {
 		data.setFile(fileList);
 		
 		mv.addObject("data", data);
+		mv.addObject("customerPk", customerPk);
 		
 		return mv;
 	}
