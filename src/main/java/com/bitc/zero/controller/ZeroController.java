@@ -17,7 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bitc.zero.dto.CategoryDto;
 import com.bitc.zero.dto.JoinDto;
+<<<<<<< HEAD
 import com.bitc.zero.dto.ProductDetailDto;
+=======
+import com.bitc.zero.service.ZeroService;
+>>>>>>> 00704de342dac687045034480a4ef5c11dbd30a2
 
 
 @Controller
@@ -83,8 +87,10 @@ public class ZeroController {
 		if (count == 1) {
 			HttpSession session = request.getSession();
 			int customerPk = sql.selectOne("myPageMapper.selectCustomerInfo", customerEmail);
+			JoinDto userInfo = sql.selectOne("commonMapper.selectCustomerInfo", customerEmail);
 			session.setAttribute("customerEmail", customerEmail);
 			session.setAttribute("customerPk", customerPk);
+			session.setAttribute("adminYn", userInfo.getAdminYn());
 			return true;
 		}
 		else {
