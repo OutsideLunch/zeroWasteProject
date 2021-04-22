@@ -42,7 +42,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 		registry.addInterceptor(new LoginCheckInterceptor())
 		.addPathPatterns("/zero/*")
 		.excludePathPatterns("/zero/login")
-		.excludePathPatterns("/zero/loginCheck");
+		.excludePathPatterns("/zero/loginCheck")
+		.excludePathPatterns("/zero/zeroFooter");
 
 	}
 }
