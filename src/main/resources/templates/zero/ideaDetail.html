@@ -69,7 +69,7 @@
 						<td th:text="${data.customerName}"></td>
 					</tr>
 					<tr th:if="${#lists.size(data.file)} > 0" th:each="list : ${data.file}">
-						<td colspan="4">
+						<td colspan="4" >
 							<img th:src="@{${list.storedFilePath}}">
 							<a th:href="@{/zero/downloadFile(idx=${list.idx}, boardIdx=${list.boardIdx})}" 
 							th:text="|${list.originalFileName} (${list.fileSize} kb)|"></a>

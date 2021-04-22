@@ -20,12 +20,9 @@ import com.bitc.zero.dto.BoardDto;
 import com.bitc.zero.dto.CategoryDto;
 import com.bitc.zero.dto.JoinDto;
 import com.bitc.zero.dto.TFileDto;
-import com.bitc.zero.service.ZeroService;
 
 @Controller
 public class NoticeController {
-	@Autowired
-	private ZeroService zeroService;
 	
 	@Autowired
 	protected SqlSession sql;
@@ -38,7 +35,6 @@ public class NoticeController {
 	public ModelAndView noticeList() throws Exception{
 		ModelAndView mv = new ModelAndView("/zero/noticeList");
 		List<BoardDto> list = sql.selectList("noticeMapper.selectNoticeList");
-//		zeroService.selectNoticeList();
 		for(int i=0; i<list.size(); i++) {
 			list.get(i).setBoardNum(i+1);
 		}
@@ -76,22 +72,16 @@ public class NoticeController {
 			adminYn = session.getAttribute("adminYn").toString();
 			
 			if (adminYn.equals("Y")) {
-				// 관리자 일 경우
-				JoinDto data = sql.selectOne("commonMapper.selectAdminInfoYn", adminYn);
+				// 관리자일 경우
+				JoinDto data = sql.selectOne("commonMapper.selectCustomerInfo", customerEmail);
 				
 				mv.setViewName("/zero/noticeWrite");
 				mv.addObject("data", data);
 				
 				return mv;
-				
-//				JoinDto data = zeroService.selectAdminInfoYn(adminYn, customerEmail);
-//				mv.setViewName("/zero/noticeWrite");
-//				mv.addObject("data", data);
-//				
-//				return mv;
 			}
 			else {
-				// 일반 유저
+				// 일반 고객일 경우
 				mv.setViewName("/zero/noticeList");
 			}
 		}
@@ -115,8 +105,7 @@ public class NoticeController {
 	// 공지사항 글쓰기
 	@RequestMapping(value="/zero/noticeWrite", method=RequestMethod.POST)
 	public String insertNoticeWrite(BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception {
-		zeroService.insertNoticeWrite(board, uploadFiles);
-		
+
 		sql.insert("noticeMapper.insertNoticeWrite", board);
 		
 		List<TFileDto> fileList = fileUtil.parseFileInfo(board.getBoardPk(), uploadFiles);
