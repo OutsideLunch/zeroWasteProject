@@ -90,7 +90,7 @@
 			ON 
 				pr.product_pk = p.product_pk
 			WHERE 
-				pr.product_pk = 1;
+				pr.product_pk = #{productPk};
 		]]>
 	</select>
 	
