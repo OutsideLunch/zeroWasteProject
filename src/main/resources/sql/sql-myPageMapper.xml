@@ -102,6 +102,27 @@
 		
 	</select>
 	
+	<insert id="insertReviewFile" parameterType="com.bitc.zero.dto.TFileDto">
+		<![CDATA[
+			INSERT INTO t_file
+				(board_idx,product_review_pk, original_file_name, stored_file_path, 
+				file_size, create_id, create_datetime)
+			VALUES
+		]]> 
+		
+		<foreach collection="list" item="file" separator=",">
+			(
+				0,
+				#{file.productReviewPk},
+				#{file.originalFileName},
+				#{file.storedFilePath},
+				#{file.fileSize},
+				#{file.createId},
+				NOW()
+			)
+		</foreach>
+	</insert>
+	
 </mapper>
 
 

@@ -71,16 +71,17 @@ public class MypageController {
 		try {
 			HttpSession session = req.getSession();
 			int reviewPk = sql.selectOne("myPageMapper.seletLastProductReviewPk");
-			dto.setCustomerPk((int)session.getAttribute("customerPk"));
+			int customerPk = (int)session.getAttribute("customerPk");
+			dto.setCustomerPk(customerPk);
 			dto.setProductReviewPk(reviewPk);
 					
 			sql.insert("myPageMapper.insertProductReview", dto);
 			sql.update("myPageMapper.updateReviewYn",dto.getOrderDetailPk());
 			
-			List<TFileDto> fileList = fileUtil.parseReviewFileInfo(reviewPk, uploadFiles);
+			List<TFileDto> fileList = fileUtil.parseReviewFileInfo(reviewPk, uploadFiles, customerPk);
 			
 			if (CollectionUtils.isEmpty(fileList) == false) {
-				sql.insert("ideaMapper.insertIdeaFile", fileList);
+				sql.insert("myPageMapper.insertReviewFile", fileList);
 			}
 			return "1";
 		} catch (Exception e) {
