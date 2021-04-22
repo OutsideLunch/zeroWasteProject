@@ -58,8 +58,12 @@ public class IdeaController {
 		ModelAndView mv = new ModelAndView("/zero/ideaDetail");
 		
 		BoardDto data = sql.selectOne("ideaMapper.selectIdeaDetail",boardPk);
+
+		List<TFileDto> fileList = sql.selectList("ideaMapper.zeroFileList",boardPk);
+
+		data.setFile(fileList);
+		
 		mv.addObject("data", data);
-		mv.addObject("storedFilePath", data.getFile().get(0).getStoredFilePath());
 		
 		return mv;
 	}
