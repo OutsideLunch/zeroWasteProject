@@ -38,9 +38,9 @@
 	<div id="defaultNav" class="sticky-top"></div>
 	
 	<div class="container py-5">
-		<h4 class="text-center">공지사항</h4>
-        <form id="frm" method="POST" class="mt-4">
-            <table class="table table-light">
+		<h4 class="text-center">공지사항 </h4>
+		<form id="frm" method="POST" class="mt-4">
+			<table class="table table-light">
 				<tbody>
 					<tr>
 						<td>
@@ -49,12 +49,17 @@
 					</tr>
 					<tr class="d-flex justify-content-center">
 						<td>작성자</td>
-						<td th:text="${data.create_id}"></td>
+						<td th:text="${data.customerName}"></td>
 					</tr>
-					<tr>
-						<td colspan="4" class="text-center">
-							<img th:src="@{data.storedFilePath}" alt="" width="50%">
+					<tr th:if="${#lists.size(data.file)} > 0" th:each="list : ${data.file}">
+						<td colspan="4">
+							<img th:src="@{${list.storedFilePath}}">
+							<a th:href="@{/zero/downloadFile(idx=${list.idx}, boardIdx=${list.boardIdx})}" 
+							th:text="|${list.originalFileName} (${list.fileSize} kb)|"></a>
 						</td>
+					</tr>
+					<tr th:unless="${#lists.size(data.file)} > 0">
+						<td colspan="4">첨부된 파일이 없습니다.</td>
 					</tr>
 					<tr>
 						<td class="mx-auto">
@@ -68,9 +73,11 @@
 			<input type="hidden" id="method" name="_method"/>
 			<div class="d-flex flex-rows justify-content-end">
 				<button type="button" class="btn btn-primary" id="btnList">목록으로</button>
+				<button type="button" class="btn btn-success ml-2" id="btnEdit">수정하기</button>
+				<button type="button" class="btn btn-danger ml-2" id="btnDel">삭제하기</button>
 			</div>
-        </form>
-	</div>
+		</form>
+    </div>
              	
 	<!-- footer 영역 -->
     <footer class="py-5 mt-5"></footer>

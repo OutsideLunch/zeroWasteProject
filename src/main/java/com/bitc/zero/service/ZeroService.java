@@ -16,61 +16,73 @@ import com.bitc.zero.dto.ReviewDto;
 import com.bitc.zero.dto.TFileDto;
 
 public interface ZeroService {
-	//회원가입정보 DB에 입력
+	// 회원가입정보 DB에 입력
 	void insertJoin(JoinDto join) throws Exception;
-	
-	//로그인체크시 email과 pw를 DB에서 검색하고 0또는 1값을 가져옴
+
+	// 로그인체크시 email과 pw를 DB에서 검색하고 0또는 1값을 가져옴
 	int selectCustomerInfoYn(String customerEmail, String customerPw) throws Exception;
-	
-	//상품카테고리
+
+	// 상품카테고리
 	List<CategoryDto> selectProductCategoryList() throws Exception;
-	
-	//상품 전체 목록
+
+	// 상품 전체 목록
 	List<ProductListDto> selectProductList(int productCategoryPk) throws Exception;
-	
-	//상품 상세 정보
+
+	// 상품 상세 정보
 	ProductDetailDto selectProductDetail(int productPk) throws Exception;
-	
-	//상품 후기 목록
+
+	// 상품 후기 목록
 	ReviewDto selectReviewList(int productPk) throws Exception;
-	
-	//커뮤니티 전체 목록
+
+	// 커뮤니티 전체 목록
 	List<BoardDto> selectIdeaList() throws Exception;
-	
-	//커뮤니티 상세 보기
+
+	// 커뮤니티 상세 보기
 	BoardDto selectIdeaDetail(int boardPk) throws Exception;
-	
-	//커뮤니티 글 작성
+
+	// 커뮤니티 글 작성
 	public void insertIdeaWrite(BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception;
-	
-	//커뮤니티 글 수정
+
+	// 커뮤니티 글 수정
 	void ideaUpdate(BoardDto board) throws Exception;
-	
-	//커뮤니티 글 삭제
+
+	// 커뮤니티 글 삭제
 	void ideaDelete(int boardPk) throws Exception;
-	
-	//파일 다운로드 위한 파일 정보
+
+	// 파일 다운로드 위한 파일 정보
 	TFileDto zeroFileInformation(int idx, int boardIdx) throws Exception;
-	
-	//보드 카테고리 불러오기
+
+	// 보드 카테고리 불러오기
 	CategoryDto selectBoardCategoryList(int boardCategoryPk) throws Exception;
-	
-	//세션에 로그인된 이메일 이용하여 고객 정보 불러오기
+
+	// 세션에 로그인된 이메일 이용하여 고객 정보 불러오기
 	JoinDto selectCustomerInfo(String customerEmail) throws Exception;
-	
-	//orders 테이블에 customer_pk, order_date 저장하기
-	int insertOrder(OrderDto order) throws Exception;
-	
-	//order_detail 테이블에 order_pk 및 주문정보 저장하기
-	void insertOrderDetail(OrderDto order) throws Exception;
+
+	// orders 테이블에 고객번호, 주문날짜 저장하기
+	void insertOrder(OrderDto order) throws Exception;
 
 	// 마이페이지 상세
 	List<MyPageDto> getMypageInfo(int customerPk) throws Exception;
 
 	void postProductReview(ReviewDto review, MultipartHttpServletRequest uploadFiles) throws Exception;
-	
-	// 입점제안 정보 DB에 입력
-		public void insertProposal(ProposalDto proposal, MultipartHttpServletRequest uploadFiles) throws Exception;
 
+	// 입점제안 정보 DB에 입력
+	public void insertProposal(ProposalDto proposal, MultipartHttpServletRequest uploadFiles) throws Exception;
+
+
+	// 공지사항 전체 목록
+	List<BoardDto> selectNoticeList() throws Exception;
+
+	// 공지사항 상세 보기
+	BoardDto selectNoticeDetail(int boardPk) throws Exception;
+
+	// 공지사항 글 작성
+	public void insertNoticeWrite(BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception;
+
+	// 공지사항 글 수정
+	void noticeUpdate(BoardDto board) throws Exception;
+
+	// 공지사항 글 삭제
+	void noticeDelete(int boardPk) throws Exception;
 
 }

@@ -28,45 +28,51 @@
 	<!-- 네비게이션 영역 -->
 	<div id="defaultNav" class="sticky-top"></div>
 	
-	<div class="container py-5">
+	<main class="container py-5">
         <div class="row">
             <div class="col-sm-2 border-right">
                  <ul class="nav flex-column">
                      <li class="nav-item">
-                         <a href="#" class="nav-link text-muted">공지사항</a>
+                        <a th:href="noticeList" class="nav-link text-muted"><span th:text="${cate.boardCategoryName}"></span></a>
                      </li>
                  </ul>
             </div>
-            <div class="col-sm-10">
+            <section class="col-sm-10">
                  <article>
                      <h4 class="text-center">공지사항</h4>
                  </article>
-                 <div class="mt-4">
-                     <table class="table table-hover text-center">
-                         <colgroup>
-                             <col width="20%" />
-                             <col width="*%" />
-                             <col width="20%" />
-                         </colgroup>
-                         <thead>
-                             <tr>
-                                 <th>번호</th>
-                                 <th>제목</th>
-                                 <th>작성자</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             <tr>
-                             	<td><a href="/zero/noticeDetail/" th:attrappend="href=${list.boardPk}" th:text="${list.boardPk}"></a></td>
-                                <td><a href="/zero/noticeDetail/" th:attrappend="href=${list.boardPk}" th:text="${list.boardTitle}"></a></td>
-                                <td th:text="${list.create_Id}"></td>
-                             </tr>
-                         </tbody>
-                     </table>
-                 </div>
-            </div>
-        </div> 
-    </div>
+                    <article class="mt-4">
+                    <table class="table table-hover text-center">
+                        <colgroup>
+                            <col width="20%" />
+                            <col width="*%" />
+                            <col width="20%" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.size(data)} >0" th:each="list : ${data}">
+                                <td><a href="/zero/noticeDetail/" th:attrappend="href=${list.boardPk}"><span th:text="${list.boardPk}"></span></a></td>
+                                <td><a href="/zero/noticeDetail/" th:attrappend="href=${list.boardPk}"><span th:text="${list.boardTitle}"></span></a></td>
+                                <td th:text="${list.customerName}"></td>
+                            </tr>
+                            <tr th:unless="${#lists.size(data)} > 0">
+							<td colspan="3">조회된 결과가 없습니다.</td>
+							</tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-secondary" href="/zero/noticeWrite" >글쓰기</a>
+                    </div>
+                </article>
+           </section>
+       </div> 
+    </main>
          	
 	<!-- footer 영역 -->
     <footer class="py-5 mt-5"></footer>
