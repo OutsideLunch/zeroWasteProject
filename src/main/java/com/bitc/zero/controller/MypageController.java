@@ -68,29 +68,26 @@ public class MypageController {
 		@ResponseBody
 		@RequestMapping(value="/zero/saveProductReview", method=RequestMethod.POST)
 		public String postProductReview(ReviewDto dto, HttpServletRequest req, MultipartHttpServletRequest uploadFiles) {
-			//MultipartHttpServletRequest uploadFiles
-			//zeroService.postProductReview(dto, uploadFiles);
+
 			try {
 				HttpSession session = req.getSession();
+				int reviewPk = sql.selectOne("myPageMapper.seletLastProductReviewPk");
 				dto.setCustomerPk((int)session.getAttribute("customerPk"));
-				logger.info("param1 ::"+dto.getProductReviewContents());
-				logger.info("param2 ::"+dto.getProductReviewScore());
-				logger.info("param3 ::"+dto.getOrderDetailPk());
-				logger.info("param4 ::"+dto.getCustomerPk());
+				dto.setProductReviewPk(reviewPk);
+						
+				sql.insert("myPageMapper.insertProductReview", dto);
 				
-				int lastPk = sql.insert("myPageMapper.insertProductReview", dto);
-				logger.info("lastPk :::"+lastPk);
+				List<TFileDto> fileList = fileUtil.parseReviewFileInfo(reviewPk, uploadFiles);
 				
-//				List<TFileDto> fileList = fileUtil.parseFileInfo(0, uploadFiles, dto.getProductReviewPk());
-//				
-//				if (CollectionUtils.isEmpty(fileList) == false) {
-//					zeroMapper.insertIdeaFile(fileList);
-//				}
+				if (CollectionUtils.isEmpty(fileList) == false) {
+					zeroMapper.insertIdeaFile(fileList);
+				}
+				return "1";
 			} catch (Exception e) {
 				logger.warn("productInsert Error :::"+e);
+				return "2";
 				
 			}
 			
-			return "1";
 		}
 }

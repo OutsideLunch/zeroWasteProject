@@ -58,7 +58,7 @@
                             <td th:text="${list.orderCnt}"></td>
                             <td th:text="${list.totalPrice}+원"></td>
                             <td>
-                                <button class="btn btn-success" type="button" th:onclick="|reviewClick(${list.orderDetailPk})|" data-toggle="modal" data-target="#review">리뷰작성</button>
+                                <button class="btn btn-success" type="button" th:onclick="|reviewClick(${list.orderDetailPk},${list.productPk})|" data-toggle="modal" data-target="#review">리뷰작성</button>
 								<!-- 리뷰작성부분 값 넘겨주기 구현해야함 -->
                                 <div class="modal fade" id="review">
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -67,6 +67,7 @@
                                             <div class="modal-header">
                                                 <div class="modal-title">리뷰작성</div>
                                                 <input type="hidden" id="orderPk" name="orderDetailPk">
+                                                <input type="hidden" id="productPk" name="productPk">
                                                 <!-- <input type="hidden" th:value="customerPk"> -->
                                                 <!-- <input type="hidden" th:value="${list.orderDetailPk}"> -->
                                                 <button class="close" type="button" data-dismiss="modal">&times;</button>
@@ -75,7 +76,7 @@
                                                 <textarea name="productReviewContents" id="productReviewContents" cols="30" rows="8" class="form-control mb-2 rounded-0" placeholder="내용"></textarea>
                                                 <div class="d-flex">
                                                     <div class="flex-fill p-1">
-                                                        <input type="file" class="form-control form-control-file border-0" placeholder="파일을 추가해주세요">    
+                                                        <input type="file" name="files" class="form-control form-control-file border-0" placeholder="파일을 추가해주세요">    
                                                     </div>
                                                     <div class="flex-fill mt-1">
                                                         <select class="form-control border-0" id="productReviewScore" name="productReviewScore">
@@ -149,8 +150,9 @@
 		
 	});
 	
-	function reviewClick(num){
-		document.querySelector('#orderPk').value = num;
+	function reviewClick(orderPk , productPk){
+		document.querySelector('#orderPk').value = orderPk;
+		document.querySelector('#productPk').value = productPk;
 	}
 </script>
 </body>

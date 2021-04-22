@@ -12,7 +12,7 @@
 	<!--mypageList-->
     <select id="getMypageInfoList" parameterType="int" resultType="com.bitc.zero.dto.MyPageDto">
     <!--myPageMapper.getMypageInfo-->
-        SELECT od.order_detail_pk, o.order_date, p.product_name, p.product_price, od.order_cnt, (p.product_price * od.order_cnt) as total_price FROM orders_detail od
+        SELECT od.order_detail_pk, p.product_pk, o.order_date, p.product_name, p.product_price, od.order_cnt, (p.product_price * od.order_cnt) as total_price FROM orders_detail od
         JOIN orders o
         ON od.order_pk = o.order_pk        
         JOIN product p
@@ -34,12 +34,14 @@
 		]]>
 	</select>
 	
-	<insert id="insertProductReview" parameterType="com.bitc.zero.dto.ReviewDto" useGeneratedKeys="true" keyProperty="productReviewPk">
+	<insert id="insertProductReview" parameterType="com.bitc.zero.dto.ReviewDto">
 		<!-- myPageMapper.insertProductReview -->
 		<![CDATA[ 
 			INSERT INTO 
 				product_review (
-								order_detail_pk			, 
+								product_review_pk		,
+								order_detail_pk			,
+								product_pk				, 
 								customer_pk				, 
 								product_review_contents	, 
 								product_review_score	, 
@@ -47,15 +49,15 @@
 								)
 			VALUE
 								(
+								#{productReviewPk}		,
 								#{orderDetailPk}		,
+								#{productPk}			,
 								#{customerPk}			, 
 								#{productReviewContents}, 
 								#{productReviewScore}	,
 								'Y'
 								)
 			]]>
-        		<!-- SELECT MAX(PRODUCT_REVIEW_PK)+1 FROM PRODUCT_REVIEW -->
-
 	</insert>
 	
 	<insert id="postProductReviewImg" parameterType="com.bitc.zero.dto.TFileDto">
@@ -77,6 +79,12 @@
 			)
 		</foreach>
 	</insert>
+	
+	<select id="seletLastProductReviewPk" resultType="Integer">
+		SELECT 	MAX(PRODUCT_REVIEW_PK) + 1
+		FROM 	PRODUCT_REVIEW
+		
+	</select>
 	
 </mapper>
 
