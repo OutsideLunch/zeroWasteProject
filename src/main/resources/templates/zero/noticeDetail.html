@@ -30,6 +30,23 @@
 			location.href = "/zero/noticeList";
 		});
 		
+		//게시글 수정 버튼
+		$("#btnEdit").on("click",function(){
+			$("#method").val("PUT");
+			var frm = $("#frm")[0];
+			/*컨트롤러, 서비스 등에서 추가 필요*/
+			frm.action = "/zero/noticeDetail/"+boardPk;
+			frm.submit();
+		});
+		
+		//게시글 삭제 버튼
+		$("#btnDel").on("click",function(){
+			$("#method").val("DELETE");
+			var frm = $("#frm")[0];
+			/*컨트롤러, 서비스 등에서 추가 필요*/
+			frm.action = "/zero/noticeDetail/"+boardPk; 
+			frm.submit();
+		});
 	});
 </script>
 </head>

@@ -35,6 +35,11 @@ public class IdeaController {
 	public ModelAndView ideaList() throws Exception {
 		ModelAndView mv = new ModelAndView("/zero/ideaList");
 		List<BoardDto> list = zeroService.selectIdeaList();
+		
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setBoardNum(i+1);
+		}
+		
 		CategoryDto cate = zeroService.selectBoardCategoryList(2); // 카테고리 : 2 ,공지사항 : 1
 		mv.addObject("data", list);
 		mv.addObject("cate", cate);

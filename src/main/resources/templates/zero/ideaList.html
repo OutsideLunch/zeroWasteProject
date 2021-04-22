@@ -58,7 +58,7 @@
                         </thead>
                         <tbody>
                             <tr th:if="${#lists.size(data)} >0" th:each="list : ${data}">
-                                <td><a href="/zero/ideaDetail/" th:attrappend="href=${list.boardPk}"><span th:text="${list.boardPk}"></span></a></td>
+                                <td><a href="/zero/ideaDetail/" th:attrappend="href=${list.boardPk}"><span th:text="${list.boardNum}"></span></a></td>
                                 <td><a href="/zero/ideaDetail/" th:attrappend="href=${list.boardPk}"><span th:text="${list.boardTitle}"></span></a></td>
                                 <td th:text="${list.customerName}"></td>
                             </tr>

@@ -29,6 +29,10 @@ public class NoticeController {
 		ModelAndView mv = new ModelAndView("/zero/noticeList");
 		List<BoardDto> list = zeroService.selectNoticeList();
 		
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setBoardNum(i+1);
+		}
+		
 		CategoryDto cate = zeroService.selectBoardCategoryList(1); // 카테고리 : 2 ,공지사항 : 1
 		mv.addObject("data", list);
 		mv.addObject("cate", cate);
@@ -37,7 +41,7 @@ public class NoticeController {
 	}
 	
 	//공지사항 상세 페이지 가져오기
-	@RequestMapping(value="/zero/noticeDetail{boardPk}", method=RequestMethod.GET)
+	@RequestMapping(value="/zero/noticeDetail/{boardPk}", method=RequestMethod.GET)
 	public ModelAndView noticeDetail(@PathVariable("boardPk") int boardPk) throws Exception{
 		ModelAndView mv = new ModelAndView("/zero/noticeDetail");
 		
