@@ -24,6 +24,21 @@
 		]]>
 	</select>
 	
+	<!-- (공용) 특정 글 파일 목록 -->
+	<select id="zeroFileList" parameterType="int" resultType="com.bitc.zero.dto.TFileDto">
+		<![CDATA[
+			SELECT
+				idx, board_idx, original_file_name, stored_file_path,
+				FORMAT(ROUND(file_size / 1024), 0) AS file_size
+			FROM
+				t_file
+			WHERE
+				board_idx = #{boardIdx}
+			AND
+				deleted_yn = 'N'
+		]]>
+	</select>
+	
 </mapper>
 
 
