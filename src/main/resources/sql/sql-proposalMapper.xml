@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proposalMapper">
+
+	<!-- 입점제안 정보 DB에 삽입 -->
+	<insert id="insertProposal" parameterType="com.bitc.zero.dto.ProposalDto" useGeneratedKeys="true" keyProperty="partnerPk">
+		<![CDATA[
+			INSERT INTO partners 
+				(partner_name, partners_link, product_name, replace_product, product_material, packaging_material)
+			VALUES 
+				(#{partnerName}, #{partnersLink}, #{productName}, #{replaceProduct}, #{productMaterial}, #{packagingMaterial})
+		]]>
+	</insert>
+	
+	<!-- 입점제안 파일정보 DB에 삽입 -->
+	<insert id="insertProposalFile" parameterType="com.bitc.zero.dto.TFileDto">
+		<![CDATA[ 
+			INSERT INTO t_file
+				(board_idx, original_file_name, stored_file_path, 
+				file_size, create_id, create_datetime)
+			VALUES
+		]]>
+		
+		<foreach collection="list" item="file" separator=",">
+			(
+				#{file.boardIdx},
+				#{file.originalFileName},
+				#{file.storedFilePath},
+				#{file.fileSize},
+				'test',
+				NOW()
+			)
+		</foreach>
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

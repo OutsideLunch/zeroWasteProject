@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productMapper">
+	
+	<!-- 상품 전체 목록 불러오기 -->
+	<select id="selectProductList" resultType="com.bitc.zero.dto.ProductListDto">
+		<![CDATA[
+			SELECT 
+				p.product_pk, p.product_category_pk, 
+				p.product_name,p.product_price, 
+				f.stored_file_path
+			FROM 
+				product p
+			JOIN 
+				product_file f
+			ON
+				p.product_pk = f.product_pk
+			
+			JOIN 
+				partners pt
+			ON 
+				pt.partner_pk = p.partner_pk
+			WHERE p.product_category_pk = #{productCategoryPk}
+			GROUP BY p.product_name
+		]]>
+	</select>
+	
+	<!-- 상품 상세 조회 -->
+	<select id="selectProductDetail" parameterType="int" resultType="com.bitc.zero.dto.ProductDetailDto">
+		<![CDATA[
+			SELECT 
+				p.product_pk, p.product_name, p.product_price, 
+				pt.partner_pk, pt.partner_name,
+				f.stored_file_path
+			FROM 
+				product p
+			JOIN 
+				product_file f
+			ON
+				p.product_pk = f.product_pk
+			
+			JOIN 
+				partners pt
+			ON 
+				pt.partner_pk = p.partner_pk
+			WHERE
+				p.product_pk = #{productPk}
+			ORDER BY 
+				f.stored_file_path ASC
+			LIMIT 1
+		]]>
+	</select>
+	
+	<!-- 상품 상세설명 이미지 가져오기 -->
+	<select id="selectProductDesc" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT 
+				f.stored_file_path
+			FROM 
+				product p
+			JOIN 
+				product_file f
+			ON
+				p.product_pk = f.product_pk
+			ORDER BY 
+				f.stored_file_path DESC
+			LIMIT 1
+		]]>
+	</select>
+	
+	<!-- 상품 상세 속 리뷰 조회 (t_file에 값이 없으면 전체 다 출력되지 않는다) -->
+	<select id="selectReviewList" parameterType="int" resultType="com.bitc.zero.dto.ReviewDto">
+		<![CDATA[
+			SELECT 
+				pr.product_pk, product_review_title, customer_name, 
+				product_review_contents, product_review_score, 
+				stored_file_path
+			FROM 
+				product_review pr
+			JOIN 
+				customers c
+			ON 
+				pr.customer_pk = c.customer_pk
+			JOIN 
+				t_file f
+			ON 
+				f.product_review_pk = pr.product_review_pk
+			JOIN 
+				product p
+			ON 
+				pr.product_pk = p.product_pk
+			WHERE 
+				pr.product_pk = 1;
+		]]>
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderMapper">
+	
+	<!-- orders 테이블에 고객번호, 주문번호(자동생성키), 주문날짜(자동설정) 저장하기 -->
+	<insert id="insertOrder" parameterType="com.bitc.zero.dto.OrderDto" useGeneratedKeys="true" keyProperty="orderPk">
+		<![CDATA[
+			INSERT INTO orders 
+				(customer_pk)
+			VALUES 
+				(#{customerPk})
+		]]>
+		<selectKey keyProperty="orderPk" resultType="int">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
+	</insert>
+	
+	<!-- orders_detail 테이블에 주문번호, 상품번호, 수량, 총금액 저장하기 -->
+	<insert id="insertOrderDetail" parameterType="com.bitc.zero.dto.OrderDto" useGeneratedKeys="true" keyProperty="orderDetailPk">
+		<![CDATA[
+			INSERT INTO orders_detail 
+				(order_pk, product_pk, order_cnt, order_sum) 
+			VALUES 
+				(#{orderPk}, #{productPk}, #{orderCnt}, #{orderSum})
+		]]>
+	</insert>
+	
+	<!-- 현재고에서 주문수량만큼 빼서 product_stock에 저장하기. 아직 구현안함 -->
+	<update id="updateOrderStock" parameterType="com.bitc.zero.dto.OrderDto">
+		<![CDATA[
+			UPDATE 
+				product_stock 
+			SET 
+				product_stock_cnt = product_stock_cnt- #{orderCnt} 
+			WHERE 
+			(`product_pk` = #{productPk})
+		]]>
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

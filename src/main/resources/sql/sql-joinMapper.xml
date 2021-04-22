@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="joinMapper">
+	<!-- 회원가입 정보 DB에 삽입하기 -->
+	<insert id="insertJoin" parameterType="com.bitc.zero.dto.JoinDto" useGeneratedKeys="true" keyProperty="customerPk">
+		<![CDATA[
+			INSERT INTO customers 
+				(customer_email, customer_pw, customer_addr, customer_name, customer_gender, customer_phone)
+			VALUES 
+				(#{customerEmail}, #{customerPw}, #{customerAddr}, #{customerName}, #{customerGender}, #{customerPhone})
+		]]>
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
