@@ -17,29 +17,33 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bitc.zero.dto.CategoryDto;
 import com.bitc.zero.dto.JoinDto;
-import com.bitc.zero.dto.MyPageDto;
-import com.bitc.zero.service.ZeroService;
+import com.bitc.zero.dto.ProductDetailDto;
 
 
 @Controller
 public class ZeroController {
 	
 	@Autowired
-	private ZeroService zeroService;
-	
-	@Autowired
 	protected SqlSession sql;
 	
 	//루트 진입시 메인화면
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String zeroMaiRootn() throws Exception{
+	public String zeroMainRoot() throws Exception{
 		return "redirect:/zero/main";
 	}
 	
 	//메인화면 가져오기
 	@RequestMapping(value="/zero/main", method=RequestMethod.GET)
-	public String zeroMain() throws Exception{
-		return "/zero/main";
+	public ModelAndView zeroMain() throws Exception{
+		ModelAndView mv = new ModelAndView("/zero/main");
+		
+		List<ProductDetailDto> list1 = sql.selectList("mainMapper.selectNewArrival");
+		List<ProductDetailDto> list2 = sql.selectList("mainMapper.selectRecommendation");
+		
+		mv.addObject("data1",list1);
+		mv.addObject("data2",list2);
+		
+		return mv;
 	}
 	
 	//navbar페이지 가져오기

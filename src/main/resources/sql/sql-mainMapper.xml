@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mainMapper">
+	
+	<!-- 신상품 8개 가져오기 -->
+	<select id="selectNewArrival" resultType="com.bitc.zero.dto.ProductDetailDto">
+		<![CDATA[
+			SELECT
+				p.product_pk, pf.stored_file_path 
+			FROM 
+				product p 
+			JOIN 
+				product_file pf
+			ON 
+				p.product_pk = pf.product_pk
+			GROUP BY p.product_pk
+			ORDER BY p.product_pk DESC LIMIT 8
+		]]>
+	</select>
+	
+	<!-- 추천상품 8개 가져오기 -->
+	<select id="selectRecommendation" resultType="com.bitc.zero.dto.ProductDetailDto">
+		<![CDATA[
+			SELECT
+				p.product_pk, pf.stored_file_path
+			FROM 
+				product p 
+			JOIN 
+				product_file pf
+			ON 
+				p.product_pk = pf.product_pk
+			JOIN
+				product_stock ps
+			ON
+				p.product_pk = ps.product_pk
+			GROUP BY p.product_pk
+			ORDER BY ps.product_stock_cnt DESC LIMIT 8
+		]]>
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
