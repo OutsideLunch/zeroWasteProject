@@ -409,7 +409,7 @@
 	</insert>
 	
 		<!-- 공지사항 글 수정 -->
-	<update id="noticeUpdate" parameterType="com.bitc.zero.dto.BoardDto">
+	<update id="i" parameterType="com.bitc.zero.dto.BoardDto">
 		<![CDATA[ 
 			UPDATE
             	board

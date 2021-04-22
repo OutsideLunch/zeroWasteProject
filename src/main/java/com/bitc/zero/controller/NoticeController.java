@@ -27,7 +27,7 @@ public class NoticeController {
 	@RequestMapping(value="/zero/noticeList", method=RequestMethod.GET)
 	public ModelAndView noticeList() throws Exception{
 		ModelAndView mv = new ModelAndView("/zero/noticeList");
-		List<BoardDto> list = zeroService.selectIdeaList();
+		List<BoardDto> list = zeroService.selectNoticeList();
 		
 		CategoryDto cate = zeroService.selectBoardCategoryList(1); // 카테고리 : 2 ,공지사항 : 1
 		mv.addObject("data", list);
@@ -72,15 +72,15 @@ public class NoticeController {
 	
 	// 공지사항 글 수정
 	@RequestMapping(value="/zero/noticeDetail/{boardPk}", method=RequestMethod.PUT)
-	public String ideaUpdate(BoardDto board) throws Exception {
+	public String noticeUpdate(BoardDto board) throws Exception {
 		zeroService.noticeUpdate(board);
 		
 		return "redirect:/zero/noticeList";
 	}
 	
-	//커뮤니티 글 삭제
+	//공지사항 글 삭제
 	@RequestMapping(value="/zero/noticeDetail/{boardPk}", method=RequestMethod.DELETE)
-	public String ideaDelete(@PathVariable("boardPk") int boardPk) throws Exception {
+	public String noticeDelete(@PathVariable("boardPk") int boardPk) throws Exception {
 		zeroService.noticeDelete(boardPk);
 		
 		return "redirect:/zero/noticeList";

@@ -182,7 +182,7 @@ public class ZeroServiceImpl implements ZeroService {
 	@Override
 	public List<BoardDto> selectNoticeList() throws Exception {
 
-		return zeroMapper.selectIdeaList();
+		return zeroMapper.selectNoticeList();
 	}
 
 	// 공지사항 상세 보기
