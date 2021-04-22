@@ -75,14 +75,16 @@ public class MypageController {
 			dto.setProductReviewPk(reviewPk);
 					
 			sql.insert("myPageMapper.insertProductReview", dto);
+			sql.update("myPageMapper.updateReviewYn",dto.getOrderDetailPk());
 			
 			List<TFileDto> fileList = fileUtil.parseReviewFileInfo(reviewPk, uploadFiles);
 			
 			if (CollectionUtils.isEmpty(fileList) == false) {
-				zeroMapper.insertIdeaFile(fileList);
+				sql.insert("ideaMapper.insertIdeaFile", fileList);
 			}
 			return "1";
 		} catch (Exception e) {
+			System.out.println(e);
 			logger.warn("productInsert Error :::"+e);
 			return "2";
 			

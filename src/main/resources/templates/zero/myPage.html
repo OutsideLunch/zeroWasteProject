@@ -139,9 +139,10 @@
 					processData : false,
 					data: formData,
 					success: function(data) {
+						console.log('data ::'+data);
 						if(data == "1"){
 							alert("리뷰 등록을 완료하였습니다.");
-							$('#review').modal('hide');
+							location.reload();
 							
 						}else{
 							alert("리뷰등록을 실패하였습니다 다시 등록해주세요.");

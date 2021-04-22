@@ -27,6 +27,7 @@
         JOIN	product p
         ON 		p.product_pk = od.product_pk
         WHERE 	o.customer_pk=#{customerPk}
+        
             
     </select>
 	
@@ -53,8 +54,7 @@
 								product_pk				, 
 								customer_pk				, 
 								product_review_contents	, 
-								product_review_score	, 
-								product_review_write_yn
+								product_review_score	
 								)
 			VALUE
 								(
@@ -63,11 +63,18 @@
 								#{productPk}			,
 								#{customerPk}			, 
 								#{productReviewContents}, 
-								#{productReviewScore}	,
-								'Y'
+								#{productReviewScore}	
 								)
 			]]>
+			
 	</insert>
+	
+	<update id="updateReviewYn" parameterType="int">
+	<!-- myPageMapper.updateReviewYn -->
+		UPDATE 	orders_detail 
+		SET 	review_yn = 1 
+		WHERE order_detail_pk = #{orderDetailPk}
+	</update>
 	
 	<insert id="postProductReviewImg" parameterType="com.bitc.zero.dto.TFileDto">
 		<![CDATA[
