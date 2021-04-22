@@ -57,53 +57,11 @@
                             <td th:text="${list.productName}"></td>
                             <td th:text="${list.orderCnt}"></td>
                             <td th:text="${list.totalPrice}+원"></td>
-                            <td>
+                            <td th:if="${list.reviewYn} == 0">
                                 <button class="btn btn-success" type="button" th:onclick="|reviewClick(${list.orderDetailPk},${list.productPk})|" data-toggle="modal" data-target="#review">리뷰작성</button>
-                                <button class="btn-dark" type="button" th:onclick="|reviewClick(${list.orderDetailPk},${list.productPk})|" data-toggle="modal" data-target="#review">리뷰작성</button>
-								<!-- 리뷰작성부분 값 넘겨주기 구현해야함 -->
-								<!-- Modal -->
-                                <div class="modal fade" id="review">
-                                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                                      <form id="reviewModalFrm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <div class="modal-title">리뷰작성</div>
-                                                <input type="hidden" id="orderPk" name="orderDetailPk">
-                                                <input type="hidden" id="productPk" name="productPk">
-                                                <!-- <input type="hidden" th:value="customerPk"> -->
-                                                <!-- <input type="hidden" th:value="${list.orderDetailPk}"> -->
-                                                <button class="close" type="button" data-dismiss="modal">&times;</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <textarea name="productReviewContents" id="productReviewContents" cols="30" rows="8" class="form-control mb-2 rounded-0" placeholder="내용"></textarea>
-                                                <div class="d-flex">
-                                                    <div class="flex-fill p-1">
-                                                        <input type="file" id="files" name="files" class="form-control form-control-file border-0" placeholder="파일을 추가해주세요">    
-                                                    </div>
-                                                    <div class="flex-fill mt-1">
-                                                        <select class="form-control border-0" id="productReviewScore" name="productReviewScore">
-                                                            <option style="color:black; display: none;" value="0">별점주기</option>
-                                                            <option style="color:black;" value="5">★★★★★</option>
-                                                            <option style="color:black;" value="4">★★★★☆</option>
-                                                            <option style="color:black;" value="3">★★★☆☆</option>
-                                                            <option style="color:black;" value="2">★★☆☆☆</option>
-                                                            <option style="color:black;" value="1">★☆☆☆☆</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="flex-fill p-1">
-                                                        <button type="button" id="reviewSaveBtn" class="btn btn-secondary rounded-0 w-100">저장하기</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer p-1">
-                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
-                                            </div>
-                                            
-                                        </div>    
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- // Modal -->
+                            </td>
+                            <td th:unless="${list.reviewYn} == 0">
+                           		 <button class="btn btn-dark" type="button" disabled>리뷰작성</button>
                             </td>
                         </tr>
                     </tbody>
@@ -111,6 +69,50 @@
             </div>
         </div>
     </div>
+    
+    <!-- Modal -->
+          <div class="modal fade" id="review">
+              <div class="modal-dialog modal-lg modal-dialog-centered">
+                <form id="reviewModalFrm">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <div class="modal-title">리뷰작성</div>
+                          <input type="hidden" id="orderPk" name="orderDetailPk">
+                          <input type="hidden" id="productPk" name="productPk">
+                          <!-- <input type="hidden" th:value="customerPk"> -->
+                          <!-- <input type="hidden" th:value="${list.orderDetailPk}"> -->
+                          <button class="close" type="button" data-dismiss="modal">&times;</button>
+                      </div>
+                      <div class="modal-body">
+                          <textarea name="productReviewContents" id="productReviewContents" cols="30" rows="8" class="form-control mb-2 rounded-0" placeholder="내용"></textarea>
+                          <div class="d-flex">
+                              <div class="flex-fill p-1">
+                                  <input type="file" id="files" name="files" class="form-control form-control-file border-0" placeholder="파일을 추가해주세요">    
+                              </div>
+                              <div class="flex-fill mt-1">
+                                  <select class="form-control border-0" id="productReviewScore" name="productReviewScore">
+                                      <option style="color:black; display: none;" value="0">별점주기</option>
+                                      <option style="color:black;" value="5">★★★★★</option>
+                                      <option style="color:black;" value="4">★★★★☆</option>
+                                      <option style="color:black;" value="3">★★★☆☆</option>
+                                      <option style="color:black;" value="2">★★☆☆☆</option>
+                                      <option style="color:black;" value="1">★☆☆☆☆</option>
+                                  </select>
+                              </div>
+                              <div class="flex-fill p-1">
+                                  <button type="button" id="reviewSaveBtn" class="btn btn-secondary rounded-0 w-100">저장하기</button>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer p-1">
+                          <button class="btn btn-secondary" type="button" data-dismiss="modal">닫기</button>
+                      </div>
+                      
+                  </div>    
+                  </form>
+              </div>
+          </div>
+     <!-- // Modal -->
     
     <!-- footer 영역 -->
     <footer class="py-5 mt-5"></footer>

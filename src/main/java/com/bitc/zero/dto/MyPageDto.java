@@ -14,5 +14,6 @@ public class MyPageDto {
 	private String productName;
 	private int productPrice;
 	private int totalPrice;
+	private byte reviewYn;
 
 }
