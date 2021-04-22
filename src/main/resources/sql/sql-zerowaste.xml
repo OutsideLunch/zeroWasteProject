@@ -290,13 +290,13 @@
     	</selectKey>
 	</insert>
 	
-	<!-- order_detail 테이블 저장하기 -->
+	<!-- orders_detail 테이블에 주문번호, 상품번호, 수량, 총금액 저장하기 -->
 	<insert id="insertOrderDetail" parameterType="com.bitc.zero.dto.OrderDto" useGeneratedKeys="true" keyProperty="orderDetailPk">
 		<![CDATA[
 			INSERT INTO orders_detail 
 				(order_pk, product_pk, order_cnt, order_sum) 
 			VALUES 
-				(#{orderPk}, #{productPk}, #{amount}, #{sum})
+				(#{orderPk}, #{productPk}, #{orderCnt}, #{orderSum})
 		]]>
 	</insert>
 	

@@ -1,5 +1,7 @@
 package com.bitc.zero.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitc.zero.dto.JoinDto;
@@ -45,8 +48,14 @@ public class OrderController {
 	}
 	
 	//결제하기 버튼 클릭시 DB에 저장하기
-	@RequestMapping(value="/zero/insertOrder", method=RequestMethod.POST)
-	public String insertOrder(OrderDto order) throws Exception{
+	@ResponseBody
+	@RequestMapping(value="/zero/insertOrder", method= RequestMethod.GET)
+	public String insertOrder(OrderDto order, @RequestParam Map<String, String> param) throws Exception{
+		
+		order.setCustomerPk(Integer.parseInt(param.get("customerPk")));
+		order.setProductPk(Integer.parseInt(param.get("productPk")));
+		order.setOrderCnt(Integer.parseInt(param.get("orderCnt")));
+		order.setOrderSum(Integer.parseInt(param.get("orderSum")));
 		
 		int orderPk = zeroService.insertOrder(order);
 		
