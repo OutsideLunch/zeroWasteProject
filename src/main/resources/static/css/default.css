@@ -1,0 +1,35 @@
+body{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 로고바, 네비게이션, footer 배경색 */
+.logobar{
+	background-color : #EC9D6B;
+}
+
+nav{
+	background-color : #FFEFD5;
+}
+
+footer{
+	background-color : #E6D3B3;
+}
+
+/* 네비게이션 드랍다운 */
+.nav-link:hover{
+	color : white;
+}
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown>.nav-link:active {
+  /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+
+/* 테이블 */
+thead tr{
+	background-color : #9db095;
+}
