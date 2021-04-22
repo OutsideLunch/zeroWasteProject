@@ -52,8 +52,12 @@ public class NoticeController {
 		ModelAndView mv = new ModelAndView("/zero/noticeDetail");
 		
 		BoardDto data = sql.selectOne("noticeMapper.selectNoticeDetail", boardPk);
+		
+		List<TFileDto> fileList = sql.selectList("commonMapper.zeroFileList",boardPk);
+
+		data.setFile(fileList);
+		
 		mv.addObject("data", data);
-		mv.addObject("storedFilePath", data.getFile().get(0).getStoredFilePath());
 
 		return mv;
 	}
