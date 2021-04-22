@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,28 +21,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bitc.zero.common.FileUtil;
 import com.bitc.zero.dto.BoardDto;
 import com.bitc.zero.dto.CategoryDto;
 import com.bitc.zero.dto.JoinDto;
 import com.bitc.zero.dto.TFileDto;
-import com.bitc.zero.service.ZeroService;
 
 @Controller
 public class IdeaController {
 	@Autowired
-	private ZeroService zeroService;
+	protected SqlSession sql;
+	
+	@Autowired
+	private FileUtil fileUtil;
 	
 	// 커뮤니티 전체 목록
 	@RequestMapping(value="/zero/ideaList", method=RequestMethod.GET)
 	public ModelAndView ideaList() throws Exception {
 		ModelAndView mv = new ModelAndView("/zero/ideaList");
-		List<BoardDto> list = zeroService.selectIdeaList();
+		List<BoardDto> list = sql.selectList("ideaMapper.selectIdeaList");
 		
 		for(int i=0; i<list.size(); i++) {
 			list.get(i).setBoardNum(i+1);
 		}
 		
-		CategoryDto cate = zeroService.selectBoardCategoryList(2); // 카테고리 : 2 ,공지사항 : 1
+		CategoryDto cate = sql.selectOne("ideaMapper.selectBoardCategoryList",2); // 카테고리 : 2 ,공지사항 : 1
 		mv.addObject("data", list);
 		mv.addObject("cate", cate);
 		
@@ -52,7 +57,7 @@ public class IdeaController {
 	public ModelAndView ideaDetail(@PathVariable("boardPk") int boardPk) throws Exception {
 		ModelAndView mv = new ModelAndView("/zero/ideaDetail");
 		
-		BoardDto data = zeroService.selectIdeaDetail(boardPk);
+		BoardDto data = sql.selectOne("ideaMapper.selectIdeaDetail",boardPk);
 		mv.addObject("data", data);
 		mv.addObject("storedFilePath", data.getFile().get(0).getStoredFilePath());
 		
@@ -69,7 +74,7 @@ public class IdeaController {
 		String customerEmail = (String)session.getAttribute("customerEmail");
 		
 		//회원 정보가 있는 JoinDto이용, 세션에 저장된 이메일 이용하여 현재 로그인한 고객 정보 불러오기
-		JoinDto data = zeroService.selectCustomerInfo(customerEmail);
+		JoinDto data = sql.selectOne("commonMapper.selectCustomerInfo",customerEmail);
 		mv.addObject("data", data);
 		
 		return mv;
@@ -78,7 +83,14 @@ public class IdeaController {
 	// 커뮤니티 글쓰기
 	@RequestMapping(value="/zero/ideaWrite", method=RequestMethod.POST)
 	public String insertCommunityWrite(BoardDto board, MultipartHttpServletRequest uploadFiles) throws Exception {
-		zeroService.insertIdeaWrite(board, uploadFiles);
+
+		sql.insert("ideaMapper.insertIdeaWrite", board);
+		
+		List<TFileDto> fileList = fileUtil.parseFileInfo(board.getBoardPk(), uploadFiles);
+
+		if (CollectionUtils.isEmpty(fileList) == false) {
+			sql.insert("ideaMapper.insertIdeaFile",fileList);
+		}
 		
 		return "redirect:/zero/ideaList";
 	}
@@ -86,7 +98,7 @@ public class IdeaController {
 	// 커뮤니티 글 수정
 	@RequestMapping(value="/zero/ideaDetail/{boardPk}", method=RequestMethod.PUT)
 	public String ideaUpdate(BoardDto board) throws Exception {
-		zeroService.ideaUpdate(board);
+		sql.update("ideaMapper.ideaUpdate",board);
 		
 		return "redirect:/zero/ideaList";
 	}
@@ -94,7 +106,7 @@ public class IdeaController {
 	//커뮤니티 글 삭제
 	@RequestMapping(value="/zero/ideaDetail/{boardPk}", method=RequestMethod.DELETE)
 	public String ideaDelete(@PathVariable("boardPk") int boardPk) throws Exception {
-		zeroService.ideaDelete(boardPk);
+		sql.update("ideaMapper.ideaDelete",boardPk);
 		
 		return "redirect:/zero/ideaList";
 	}
@@ -103,7 +115,11 @@ public class IdeaController {
 	@RequestMapping(value="/zero/downloadFile", method=RequestMethod.GET)
 	public void downloadFile(@RequestParam int idx, @RequestParam int boardIdx, HttpServletResponse response) throws Exception {
 		
-		TFileDto zeroFile = zeroService.zeroFileInformation(idx, boardIdx);
+		TFileDto dto = new TFileDto();
+		dto.setIdx(idx);
+		dto.setBoardIdx(boardIdx);
+		
+		TFileDto zeroFile = sql.selectOne("ideaMapper.zeroFileInformation",dto);
 		
 		if(ObjectUtils.isEmpty(zeroFile) == false) {
 			String fileName = zeroFile.getOriginalFileName();
