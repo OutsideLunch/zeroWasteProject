@@ -84,7 +84,7 @@ public class ZeroController {
 			HttpSession session = request.getSession();
 			JoinDto jd = sql.selectOne("commonMapper.selectCustomerInfo", customerEmail);
 			session.setAttribute("customerEmail", customerEmail);
-			session.setAttribute("customerPk", jd.getCustomerPw());
+			session.setAttribute("customerPk", jd.getCustomerPk());
 			session.setAttribute("adminYn", jd.getAdminYn());
 			return true;
 		}
