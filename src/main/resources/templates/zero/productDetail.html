@@ -145,12 +145,12 @@ div.card-body input {
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${#lists.size(reviewData)}>0" th:each="list : ${reviewData}">
+				<tr th:if="${#lists.size(reviewData)}>0" th:each="list : ${reviewData}" class="border-bottom">
 					<!-- th:text 는 텍스트 출력. 시작태그와 끝태그 사이의 텍스트 입력 -->
-					<td th:text="${list.productReviewContents}"></td>
-					<td th:text="${list.storedFilePath}"></td>
-					<td th:text="${list.productReviewScore}"></td>
-					<td th:text="${list.customerName}"></td>
+					<td th:text="${list.productReviewContents}" class="align-middle"></td>
+					<td><img th:src="${list.storedFilePath}" class="align-middle" width="100%"></td>
+					<td th:text="${list.productReviewScore}" class="align-middle"></td>
+					<td th:text="${list.customerName}" class="align-middle"></td>
 				</tr>
 				<tr th:unless="${#lists.size(data)} > 0">
 					<td colspan="4">아직 후기가 없습니다.</td>
