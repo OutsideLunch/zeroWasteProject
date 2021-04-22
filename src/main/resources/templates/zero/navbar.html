@@ -29,9 +29,9 @@
                <a href="#" class="nav-link text-dark px-4 py-1" id="dropdownMenuButton"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">상품</a>
                <ul class="dropdown-menu py-2 px-2" aria-labelledby="dropdownMenuButton">
-               	<li class="dropdown-item py-2"><a href="#" class="text-dark">Living</a></li>
-			    <li class="dropdown-item py-2"><a href="#" class="text-dark">Kitchen</a></li>
-			    <li class="dropdown-item py-2"><a href="#" class="text-dark">Bathroom</a></li>
+               	<li class="dropdown-item py-2" th:if="${#lists.size(productCategoryData)}>0" th:each="list : ${productCategoryData}">
+               		<a href="/zero/productList/" th:attrappend="href=${list.productCategoryPk}" class="text-dark"><span th:text="${list.productCategoryName}"></span></a>
+               	</li>
 			 </ul>
            </li>
            <li class="nav-item dropdown">
