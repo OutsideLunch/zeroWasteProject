@@ -72,36 +72,20 @@ public class NoticeController {
 		String adminYn = (String)session.getAttribute("adminYn");
 		String customerEmail = (String)session.getAttribute("customerEmail");
 		
-		if (session.getAttribute("adminYn") != null) {
-			adminYn = session.getAttribute("adminYn").toString();
 			
-			if (adminYn.equals("Y")) {
-				// 관리자일 경우
-				JoinDto data = sql.selectOne("commonMapper.selectCustomerInfo", customerEmail);
+		if (adminYn.equals("Y")) {
+			// 관리자일 경우
+			JoinDto data = sql.selectOne("commonMapper.selectCustomerInfo", customerEmail);
 				
-				mv.setViewName("/zero/noticeWrite");
-				mv.addObject("data", data);
+			mv.setViewName("/zero/noticeWrite");
+			mv.addObject("data", data);
 				
-				return mv;
-			}
-			else {
-				// 일반 고객일 경우
-				mv.setViewName("/zero/noticeList");
-			}
+			return mv;
 		}
 		else {
-			mv.setViewName("/zero/noticeList");
+			// 일반 고객일 경우
+			mv.setViewName("redirect:/zero/noticeList");
 		}
-		
-		List<BoardDto> list = sql.selectList("noticeMapper.selectNoticeList");
-		
-		for(int i=0; i<list.size(); i++) {
-			list.get(i).setBoardNum(i+1);
-		}
-		
-		CategoryDto cate = sql.selectOne("ideaMapper.selectBoardCategoryList",1); // 카테고리 : 2 ,공지사항 : 1
-		mv.addObject("data", list);
-		mv.addObject("cate", cate);
 		
 		return mv;
 	}
