@@ -70,13 +70,13 @@
             </div>
         </div>
         <!--페이징-->
-			<div class="paging_area">
+			<div th:if="${#lists.size(mypageInfoList)} > 0" class="paging_area">
 				<div class="paging">
 					<a th:if="${pageMaker.prev}" href="/zero/getMyPageList?page=1" class="first">첫 페이지</a>
 					<a th:if="${pageMaker.cri.page != 1}" th:href="@{/zero/getMyPageList(page=${pageMaker.cri.page-1})}" class="prev">이전 페이지</a>
 					
 					<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-						<a th:href="@{/zero/getMyPageList(page=${i})}" class="num" th:classappend="${pageMaker.cri.page == i} ? active : '' " th:text="${i}"></a>
+						<a th:href="@{/zero/getMyPageList(page=${i})}" class="num" th:classappend="${pageMaker.cri.page == i} ? active" th:text="${i}"></a>
 					</th:block>
 					
 					<a th:if="${pageMaker.cri.page != pageMaker.lastPage}" th:href="@{/zero/getMyPageList(page=${pageMaker.cri.page+1})}" class="next">다음 페이지</a>
