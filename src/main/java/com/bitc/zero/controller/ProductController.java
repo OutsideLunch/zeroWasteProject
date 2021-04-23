@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bitc.zero.dto.CategoryDto;
 import com.bitc.zero.dto.ProductDetailDto;
 import com.bitc.zero.dto.ProductListDto;
 import com.bitc.zero.dto.ReviewDto;
@@ -27,6 +28,10 @@ public class ProductController {
 		List<ProductListDto> list = sql.selectList("productMapper.selectProductList", productCategoryPk);
 		
 		mv.addObject("data",list);
+		
+		//전체카테고리정보 가져오기
+		List<CategoryDto> category = sql.selectList("commonMapper.selectProductCategoryList");
+		mv.addObject("productCategoryData",category);
 		
 		return mv;
 	}

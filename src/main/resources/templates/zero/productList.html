@@ -39,8 +39,8 @@
 	<main class="container py-5">
 		<div class="row">
 			<div class="col-sm-2 border-right">
-				<ul class="nav nav-pills d-flex flex-column" th:if="${#lists.size(data)}>0" th:each="list : ${data}">
-					<li class="nav-item"><a href="#" class="nav-link text-muted" th:text="${list.productCategoryPk}"></a></li>
+				<ul class="nav nav-pills d-flex flex-column" th:if="${#lists.size(productCategoryData)}>0" th:each="list : ${productCategoryData}">
+					<li class="nav-item"><a href="/zero/productList/" th:attrappend="href=${list.productCategoryPk}" class="nav-link text-muted" th:text="${list.productCategoryName}"></a></li>
 				</ul>
 			</div>
 			<section class="col-sm-10">
