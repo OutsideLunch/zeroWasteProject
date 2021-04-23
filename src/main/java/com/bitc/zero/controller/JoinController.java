@@ -1,18 +1,20 @@
 package com.bitc.zero.controller;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bitc.zero.dto.JoinDto;
-import com.bitc.zero.service.ZeroService;
 
 @Controller
 public class JoinController {
-	@Autowired
-	private ZeroService zeroService;
+	
+	protected static final Logger logger = LogManager.getLogger(MypageController.class);
 	
 	@Autowired
 	protected SqlSession sql;
@@ -23,11 +25,24 @@ public class JoinController {
 		return "/zero/join";
 	}
 	
-	//join POST 실행하고 메인페이지로 돌아가기
+	//join -> 회원가입
+	@ResponseBody
 	@RequestMapping(value="/zero/join", method=RequestMethod.POST)
-	public String insertJoin(JoinDto join) throws Exception {
-		sql.insert("insertJoin",join);
+	public String insertJoin(JoinDto join) {
 		
-		return "redirect:/zero/main";
+		try {
+			// 존재유무 Check
+			boolean existYn = sql.selectOne("joinMapper.customerYnChk", join.getCustomerEmail());
+			if(existYn) {
+				return "2";
+			} 
+			
+			sql.insert("joinMapper.insertJoin",join);
+			return "1";
+		} catch (Exception e) {
+			logger.warn("customer Insert Error ::"+e);
+			return "3";
+		}
+		
 	}
 }

@@ -15,18 +15,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
-<script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
 <script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#defaultNav').load('navbar');
-		$('footer').load('footer');
-		
-		$('#btnJoin').click(function() {
-			alert("회원가입이 완료되었습니다.");
-		});
-	});
-</script>
 <style>
     ::placeholder {
         font-size: 0.8rem;
@@ -40,7 +29,7 @@
         <div class="d-flex justify-content-center p-4">
             <h4>회원가입</h4>
         </div>
-        <form action="/zero/join" method="POST" class="text-center">
+        <form action="/zero/join" method="POST" class="text-center" id="joinFrm">
         	<div class="container col-sm-6 mx-auto">
         		<div class="form-group d-flex row align-items-center">
 	                <label for="customerEmail" class="col-sm-3 p-0 m-0">이메일</label>
@@ -48,7 +37,7 @@
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerPw" class="col-sm-3 p-0 m-0">비밀번호</label>
-					<input type="password" id="customerPw" name="customerPw" class="form-control col-sm-9 text-center"   placeholder="비밀번호를 입력하세요">
+					<input type="password" id="customerPw" name="customerPw" maxlength="12" class="form-control col-sm-9 text-center"   placeholder="예) 숫자와 문자 포함 6~12자">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerName" class="col-sm-3 p-0 m-0">이름</label>
@@ -56,7 +45,7 @@
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerPhone" class="col-sm-3 p-0 m-0">휴대전화</label>
-					<input type="text" id="customerPhone" name="customerPhone" class="form-control col-sm-9 text-center"   placeholder="휴대전화 번호를 입력하세요">
+					<input type="text" onkeydown="return onlyNumber(event)" onkeyup='removeChar(event)' maxlength="11" id="customerPhone" name="customerPhone" class="form-control col-sm-9 text-center"   placeholder="'-' 없이 휴대전화 번호를 입력하세요">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerAddr" class="col-sm-3 p-0 m-0">주소</label>
@@ -80,12 +69,122 @@
                     </div>
                 </div>
         	</div>
-			<button id="btnJoin" type="submit" class="btn btn-secondary btn-block col-sm-6 mx-auto mt-4">
+			<button id="btnJoin" type="button" class="btn btn-secondary btn-block col-sm-6 mx-auto mt-4">
 				회원가입하기
 			</button>
         </form>
     </div>          
     <!-- footer -->
     <footer class="py-5 mt-5"></footer>
+    
+    <script type="text/javascript">
+		$(document).ready(function(){
+			$('#defaultNav').load('navbar');
+			$('footer').load('footer');
+		
+			$('#btnJoin').click(function() {
+				//Eamil 정규식
+				const emailRegExp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+				//Password 숫자+문자 최소6
+				const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+				//휴대폰번호 정규식
+				const phoneRegex = /^[0-9]*$/;
+
+				if($('#customerEmail').val() == '' || !emailRegExp.test($('#customerEmail').val())){
+					alert('이메일을 확인해주세요');
+					$('#customerEmail').focus();
+					return;
+				}else if($('#customerPw').val() == '' || !passwordRegex.test($('#customerPw').val())){
+					alert('비밀번호를 확인해주세요');
+					$('#customerPw').focus();
+					return;
+				}else if($('#customerName').val() == ''){
+					alert('이름을 입력해주세요');
+					$('#customerName').focus();
+					return;
+				}else if($('#customerPhone').val() == '' || !phoneRegex.test($('#customerPhone').val())){
+					alert('휴대폰 번호를 확인해주세요');
+					$('#customerPhone').focus();
+					return;
+				}else if($('#customerAddr').val() == ''){
+					alert('주소를 입력해주세요');
+					$('#customerAddr').focus();
+					return;
+				}
+				// 회원가입
+				const form = $('#joinFrm')[0];
+				const formData = new FormData(form);
+				
+				$.ajax ({
+					url: "/zero/join",
+					type: "POST",
+					data: formData,
+					contentType: false,
+					processData: false,
+					success: function(data) {
+						if(data == "2"){
+							alert("이미 존재하는 이메일입니다.");
+							return;
+						}
+						else if(data == "1"){
+							alert("회원가입을 완료하였습니다.");
+							location.href ='/';
+							
+						}else{
+							alert("회원가입에 실패하였습니다 다시 등록해주세요.");
+						}
+					},
+					error: function() {
+						alert("ajax 통신에 오류가 발생하였습니다.");
+					}
+				});
+			});
+	});
+		// 휴대폰번호 하이폰 자동입력
+		function inputPhoneNumber(obj) { 
+			let number = obj.value.replace(/[^0-9]/g, ""); 
+			let phone = ""; 
+			if(number.length < 4) { 
+				return number; } 
+			else if(number.length < 7) { 
+				phone += number.substr(0, 3);
+				phone += "-"; phone += number.substr(3); 
+			} else if(number.length < 11) { 
+				phone += number.substr(0, 3); 
+				phone += "-";
+				phone += number.substr(3, 3); 
+				phone += "-"; 
+				phone += number.substr(6); 
+			} else { 
+				phone += number.substr(0, 3); 
+				phone += "-"; 
+				phone += number.substr(3, 4); 
+				phone += "-";
+				phone += number.substr(7); 
+			} 
+			obj.value = phone;
+		}
+		/* 휴대폰번호 onlyNumber */
+		function onlyNumber(event){
+    		event = event || window.event;
+    		let keyID = (event.which) ? event.which : event.keyCode;
+    		if ( (keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+        		return;
+    		else
+ 		       return false;
+		}
+		
+		function removeChar(event) {
+		    event = event || window.event;
+		    var keyID = (event.which) ? event.which : event.keyCode;
+		    if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+		        return;
+		    else
+		        event.target.value = event.target.value.replace(/[^0-9]/g, "");
+		}
+		
+		/*// 휴대폰번호 onlyNumber */
+
+</script>
 </body>
 </html>

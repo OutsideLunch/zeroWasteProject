@@ -11,6 +11,14 @@
 		]]>
 	</insert>
 	
+	<select id="customerYnChk" parameterType="String" resultType="boolean">
+		SELECT EXISTS 
+        (SELECT * 
+       	 FROM 	customers 
+       	 WHERE 	customer_email = #{customerEmail}
+       	 ) 		as success;
+	</select>
+	
 </mapper>
 
 
