@@ -58,16 +58,27 @@ public class IdeaController {
 		ModelAndView mv = new ModelAndView("/zero/ideaDetail");
 		
 		HttpSession session = request.getSession();
-		int customerPk = (int)session.getAttribute("customerPk");
-		
-		BoardDto data = sql.selectOne("ideaMapper.selectIdeaDetail",boardPk);
+		if ((String)session.getAttribute("customerEmail") != null) {
+			int customerPk = (int)session.getAttribute("customerPk");
+			
+			BoardDto data = sql.selectOne("ideaMapper.selectIdeaDetail",boardPk);
 
-		List<TFileDto> fileList = sql.selectList("commonMapper.zeroFileList",boardPk);
+			List<TFileDto> fileList = sql.selectList("commonMapper.zeroFileList",boardPk);
 
-		data.setFile(fileList);
-		
-		mv.addObject("data", data);
-		mv.addObject("customerPk", customerPk);
+			data.setFile(fileList);
+			
+			mv.addObject("data", data);
+			mv.addObject("customerPk", customerPk);
+		}
+		else {			
+			BoardDto data = sql.selectOne("ideaMapper.selectIdeaDetail",boardPk);
+
+			List<TFileDto> fileList = sql.selectList("commonMapper.zeroFileList",boardPk);
+
+			data.setFile(fileList);
+			
+			mv.addObject("data", data);
+		}
 		
 		return mv;
 	}
@@ -76,14 +87,24 @@ public class IdeaController {
 	@RequestMapping(value="/zero/ideaWrite", method=RequestMethod.GET)
 	public ModelAndView ideaWrite(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("/zero/ideaWrite");
-		
 		//session에 로그인 상태인 이메일을 이용해서 작성자의 customer_pk, customer_name을 가져온다.
 		HttpSession session = request.getSession();
-		String customerEmail = (String)session.getAttribute("customerEmail");
 		
-		//회원 정보가 있는 JoinDto이용, 세션에 저장된 이메일 이용하여 현재 로그인한 고객 정보 불러오기
-		JoinDto data = sql.selectOne("commonMapper.selectCustomerInfo",customerEmail);
-		mv.addObject("data", data);
+		if ((String)session.getAttribute("customerEmail") != null) {
+			// 회원일 경우
+			String customerEmail = (String)session.getAttribute("customerEmail");
+			
+			//회원 정보가 있는 JoinDto이용, 세션에 저장된 이메일 이용하여 현재 로그인한 고객 정보 불러오기
+			JoinDto data = sql.selectOne("commonMapper.selectCustomerInfo",customerEmail);
+			mv.setViewName("/zero/ideaWrite");
+			mv.addObject("data", data);
+			
+			return mv;
+		}
+		else {
+			// 비회원일 경우
+			mv.setViewName("redirect:/zero/ideaList");
+		}
 		
 		return mv;
 	}
