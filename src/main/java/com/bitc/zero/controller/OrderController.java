@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,9 @@ import com.bitc.zero.dto.ProductDetailDto;
 
 @Controller
 public class OrderController {
+	
+	protected static final Logger logger = LogManager.getLogger(MypageController.class);
+	
 	@Autowired
 	protected SqlSession sql;
 	
@@ -27,6 +32,17 @@ public class OrderController {
 	@RequestMapping(value="/zero/order", method=RequestMethod.GET)
 	public ModelAndView order(@RequestParam int productPk, @RequestParam int amount, @RequestParam int sum, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("/zero/order");
+		
+		HttpSession session1 = request.getSession();
+		try {
+			if((String)session1.getAttribute("customerEmail") == null) {
+				mv.setViewName("redirect:/zero/main");
+				
+				return mv;
+			}
+		} catch (Exception e) {
+			logger.warn("::::session error"+e);
+		}
 		
 		//product_pk, stored_file_path, product_name 가져옴
 		ProductDetailDto pd = sql.selectOne("productMapper.selectProductDetail",productPk);

@@ -41,10 +41,12 @@ public class MypageController {
 	@RequestMapping(value="/zero/getMyPageList", method=RequestMethod.GET)
 	public ModelAndView myPage(HttpServletRequest req) throws Exception{
 		ModelAndView mv = new ModelAndView();
+		
+		//로그아웃상태면 main 화면으로 돌아가기
 		HttpSession session = req.getSession();
 		try {
 			if((String)session.getAttribute("customerEmail") == null) {
-				mv.setViewName("/zero/main");
+				mv.setViewName("redirect:/zero/main");
 				
 				return mv;
 			}
