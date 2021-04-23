@@ -55,7 +55,7 @@
                         <tr th:if="${#lists.size(mypageInfoList)} > 0" th:each="list, i : ${mypageInfoList}" class="border-bottom">
                             <td th:text="${num - i.index}" class="align-middle"></td>
                             <td th:text="${list.orderDate}" class="align-middle"></td>
-                            <td th:text="${list.productName}" class="align-middle"></td>
+                            <td class="align-middle"><a href="/zero/productDetail/" th:attrappend="href=${list.productPk}" class="text-dark font-weight-bold"><span th:text="${list.productName}"></span></a></td>
                             <td th:text="${list.orderCnt}" class="align-middle"></td>
                             <td th:text="${list.totalPrice}+원" class="align-middle"></td>
                             <td th:if="${list.reviewYn} == 0" class="align-middle">
@@ -148,6 +148,10 @@
 				alert("별점을 등록 해주세요");
 				return;
 			
+			}
+			else if($('#files').val() == '' || $('#files').val() == undefined){
+				alert('사진을 등록 해주세요');
+				return;
 			}
 			if(confirm('리뷰를 등록하시겠습니까?')){
 				const form = $('#reviewModalFrm')[0];
