@@ -12,6 +12,5 @@ public class TFileDto {
 	private int createId;
 	private String createDatetime;
 	private String deletedYn;
-	private int boardPk;
 	private int productReviewPk;
 }
