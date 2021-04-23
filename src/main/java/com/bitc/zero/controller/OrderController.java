@@ -58,11 +58,11 @@ public class OrderController {
 		order.setOrderSum(Integer.parseInt(param.get("orderSum")));
 		
 		sql.insert("orderMapper.insertOrder",order);
-		
-		
-		
+
 		//order_detail 테이블에 order_pk 및 주문정보 저장하기
 		sql.insert("orderMapper.insertOrderDetail",order);
+		
+		sql.update("orderMapper.updateOrderStock",order);
 		
 		String result = "주문이 완료되었습니다.";
 		

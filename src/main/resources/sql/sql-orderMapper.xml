@@ -25,7 +25,7 @@
 		]]>
 	</insert>
 	
-	<!-- 현재고에서 주문수량만큼 빼서 product_stock에 저장하기. 아직 구현안함 -->
+	<!-- 현재고에서 주문수량만큼 빼서 product_stock에 저장하기-->
 	<update id="updateOrderStock" parameterType="com.bitc.zero.dto.OrderDto">
 		<![CDATA[
 			UPDATE 
