@@ -9,24 +9,43 @@
 		WHERE customer_email = #{customerEmail}
 	</select>
 	
+	<select id="selectAllCnt" parameterType="int" resultType="int">
+		/* myPageMapper.selectAllCnt */
+		
+		SELECT  COUNT(*)
+		FROM 	orders_detail od
+        JOIN 	orders o
+        ON 		od.order_pk = o.order_pk        
+        JOIN	product p
+        ON 		p.product_pk = od.product_pk
+        WHERE 	o.customer_pk= #{customerPk}
+        ORDER BY order_date DESC
+	</select>
+	
 	<!--mypageList-->
-    <select id="getMypageInfoList" parameterType="int" resultType="com.bitc.zero.dto.MyPageDto">
-    <!--myPageMapper.getMypageInfo-->
+    <select id="getMypageInfoList" parameterType="com.bitc.zero.dto.MyPageDto" resultType="com.bitc.zero.dto.MyPageDto">
+    	/* myPageMapper.getMypageInfoList */
+    	
         SELECT 
-        		od.order_detail_pk	, 
-        		p.product_pk		, 
-        		o.order_date		, 
-        		p.product_name		, 
-        		p.product_price		, 
-        		od.order_cnt		,
-        		od.review_yn		,
+        		@num := @num+1 AS num	,
+        		od.order_detail_pk		, 
+        		p.product_pk			, 
+        		o.order_date			, 
+        		p.product_name			, 
+        		p.product_price			, 
+        		od.order_cnt			,
+        		od.review_yn			,
         		(p.product_price * od.order_cnt) as total_price 
-        FROM 	orders_detail od
+        FROM 	(select @num:=0) a, orders_detail od
         JOIN 	orders o
         ON 		od.order_pk = o.order_pk        
         JOIN	product p
         ON 		p.product_pk = od.product_pk
         WHERE 	o.customer_pk=#{customerPk}
+        ORDER BY order_date DESC
+        <if test = 'cri.perPageNum != -1'>
+			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+		</if>
         
             
     </select>

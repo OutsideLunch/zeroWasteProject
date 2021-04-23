@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,10 +19,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitc.zero.common.FileUtil;
+import com.bitc.zero.dto.Criteria;
 import com.bitc.zero.dto.MyPageDto;
+import com.bitc.zero.dto.PageMaker;
 import com.bitc.zero.dto.ReviewDto;
 import com.bitc.zero.dto.TFileDto;
-import com.bitc.zero.mapper.ZeroMapper;
 
 @Controller
 public class MypageController {
@@ -32,34 +34,43 @@ public class MypageController {
 	protected SqlSession sql;
 	
 	@Autowired
-	private ZeroMapper zeroMapper;
-	
-	@Autowired
 	private FileUtil fileUtil;
 	
 	//	마이페이지 -> 주문목록
 	@RequestMapping(value="/zero/getMyPageList", method=RequestMethod.GET)
-	public ModelAndView myPage(HttpServletRequest req) throws Exception{
+	public ModelAndView myPage(@ModelAttribute("cri") Criteria cri, HttpServletRequest req) throws Exception{
+		
 		ModelAndView mv = new ModelAndView();
 		
-		//로그아웃상태면 main 화면으로 돌아가기
+        //로그아웃상태면 main 화면으로 돌아가기
 		HttpSession session = req.getSession();
 		try {
 			if((String)session.getAttribute("customerEmail") == null) {
-				mv.setViewName("redirect:/zero/main");
+                mv.setViewName("redirect:/zero/main");
 				
 				return mv;
 			}
 		} catch (Exception e) {
 			logger.warn("::::session error"+e);
 		}
+		int customerPk = (int) session.getAttribute("customerPk");
+		int totalCnt = sql.selectOne("myPageMapper.selectAllCnt", customerPk);
 		
-		int customerPk =  (int) session.getAttribute("customerPk");
+		MyPageDto dto = new MyPageDto();
+		dto.setCustomerPk(customerPk);
+		dto.setCri(cri);
+		List<MyPageDto> mypageInfoList = sql.selectList("myPageMapper.getMypageInfoList", dto);
 		
-		List<MyPageDto> mypageInfoList = sql.selectList("myPageMapper.getMypageInfoList", customerPk);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(totalCnt);
 		
 		
 		mv.addObject("mypageInfoList", mypageInfoList);
+		mv.addObject("totalCnt", totalCnt);
+		mv.addObject("pageMaker", pageMaker);
+		mv.addObject("cri", cri);
+		
 		mv.setViewName("/zero/myPage");
 		
 		return mv;

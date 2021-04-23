@@ -6,8 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>myPage</title>
 <link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+<link rel="stylesheet" type="text/css" href="/css/paging.css" />
 <!-- 모든 페이지 공통 로고바,네비게이션,푸터, 구글폰트 css -->
-<link rel="stylesheet" th:href="@{/css/default.css}"></link>
+<link rel="stylesheet" th:href="@{/css/default.css}"/>
 <!-- 구글폰트 -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap" rel="stylesheet">
@@ -31,7 +32,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-hover text-center">
+                <table class="table table-hover text-center" th:with="num=${totalCnt - ((cri.page-1) * 5)}">
                     <colgroup>
                         <col width="15%" />
                         <col width="20%" />
@@ -42,7 +43,7 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>주문번호</th>
+                            <th>번호</th>
                             <th>주문일자</th>
                             <th>상품명</th>
                             <th>상품개수</th>
@@ -51,8 +52,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${#lists.size(mypageInfoList)} > 0" th:each="list : ${mypageInfoList}" class="border-bottom">
-                            <td th:text="${list.orderDetailPk}" class="align-middle"></td>
+                        <tr th:if="${#lists.size(mypageInfoList)} > 0" th:each="list, i : ${mypageInfoList}" class="border-bottom">
+                            <td th:text="${num - i.index}" class="align-middle"></td>
                             <td th:text="${list.orderDate}" class="align-middle"></td>
                             <td th:text="${list.productName}" class="align-middle"></td>
                             <td th:text="${list.orderCnt}" class="align-middle"></td>
@@ -68,6 +69,32 @@
                 </table>
             </div>
         </div>
+        <!--페이징-->
+			<div class="paging_area">
+				<div class="paging">
+					<a href="/zero/getMyPageList?page=1" class="first">첫 페이지</a>
+					<a href="/zero/getMyPageList?page=${pageMaker.startPage-1}" class="prev">이전 페이지</a>
+					
+					<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+						<a th:href="@{/zero/getMyPageList(page=${i})}" class="num" th:classappend="${pageMaker.cri.page == i} ? active : '' " th:text="${i}"></a>
+					</th:block>
+					<!-- <a href="#" class="num active">1</a>
+					<a href="/" class="num">2</a>
+					<a href="#" class="num">3</a>
+					<a href="#" class="num">4</a>
+					<a href="#" class="num">5</a>
+					<a href="#" class="num">6</a>
+					<a href="#" class="num">7</a>
+					<a href="#" class="num">8</a>
+					<a href="#" class="num">9</a>
+					<a href="#" class="num">10</a> -->
+					
+					<a href="#" class="next">다음 페이지</a>
+					<a href="#" class="last">마지막 페이지</a>
+				</div>
+			</div>
+			
+				<!--//페이징-->
     </div>
     
     <!-- Modal -->
@@ -123,9 +150,14 @@
 		$('footer').load('footer');
 		$('#reviewSaveBtn').on("click", function () {
 			/* 유효성 작업 -> */ 
-			if($('#productReviewContents').val() == '' || $('#productReviewContents').val() ==undefined){
-				alert('내용을 입력해주세요');
+			if($('#productReviewContents').val() == '' || $('#productReviewContents').val() == undefined){
+				alert('내용을 입력 해주세요');
 				return;
+			}
+			else if($('#productReviewScore').val() == 0 || $('#productReviewScore').val() == undefined){
+				alert("별점을 등록 해주세요");
+				return;
+			
 			}
 			if(confirm('리뷰를 등록하시겠습니까?')){
 				const form = $('#reviewModalFrm')[0];

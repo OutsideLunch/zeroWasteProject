@@ -1,0 +1,26 @@
+/*------------------------------------------PAGING------------------------------------------*/
+.paging_area {position: relative;  height: 50px; margin-top: 30px;}
+.paging_area .paging {position: relative;  margin-top: 10px; font-size: 2; text-align: center; z-index: 5;}
+.paging_area .paging a {vertical-align: top; display: inline-block; width: 30px; height: 30px; color: #888; text-align: center; line-height: 30px;}
+.paging_area .paging a.first,
+.paging_area .paging a.prev,
+.paging_area .paging a.next,
+.paging_area .paging a.last {width: 24px; height: 24px; margin: 3px; background-color: #eaeaea; border-radius: 2px; font-size: 0; text-indent: -999px;}
+
+.paging_area .paging a.prev {margin-right: 10px;}
+.paging_area .paging a.next {margin-left: 10px;}
+
+.paging_area .paging a.first {background-image: url(/image/ico/ico_page_first.png); background-repeat: no-repeat; background-position: center center;}
+.paging_area .paging a.prev {background-image: url(/image/ico/ico_page_prev.png); background-repeat: no-repeat; background-position: center center;}
+.paging_area .paging a.next {background-image: url(/image/ico/ico_page_next.png); background-repeat: no-repeat; background-position: center center;}
+.paging_area .paging a.last {background-image: url(/image/ico/ico_page_last.png); background-repeat: no-repeat; background-position: center center;}
+.paging_area .paging a.active {color: #efb800; font-weight: 600;}
+
+
+.paging_area .edit_btn,
+.paging_area .page_btn {position: absolute; right: 0; top: 0; z-index: 10;}
+.paging_area .edit_btn {left: 0; right: auto;}
+
+
+
+/* //------------------------------------------PAGING------------------------------------------*/
