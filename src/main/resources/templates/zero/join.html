@@ -33,19 +33,19 @@
         	<div class="container col-sm-6 mx-auto">
         		<div class="form-group d-flex row align-items-center">
 	                <label for="customerEmail" class="col-sm-3 p-0 m-0">이메일</label>
-	                <input type="text" id="customerEmail" name="customerEmail" class="form-control col-sm-9 text-center" placeholder="예) id@example.com">
+	                <input type="text" id="customerEmail" name="customerEmail" class="form-control col-sm-9 text-center auto_trim" placeholder="예) id@example.com">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerPw" class="col-sm-3 p-0 m-0">비밀번호</label>
-					<input type="password" id="customerPw" name="customerPw" maxlength="12" class="form-control col-sm-9 text-center"   placeholder="예) 숫자와 문자 포함 6~12자">
+					<input type="password" id="customerPw" name="customerPw" maxlength="12" class="form-control col-sm-9 text-center auto_trim"   placeholder="예) 숫자와 문자 포함 6~12자">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerName" class="col-sm-3 p-0 m-0">이름</label>
-					<input type="text" id="customerName" name="customerName" class="form-control col-sm-9 text-center"   placeholder="이름을 입력하세요">
+					<input type="text" id="customerName" name="customerName" class="form-control col-sm-9 text-center auto_trim"   placeholder="이름을 입력하세요">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerPhone" class="col-sm-3 p-0 m-0">휴대전화</label>
-					<input type="text" onkeydown="return onlyNumber(event)" onkeyup='removeChar(event)' maxlength="11" id="customerPhone" name="customerPhone" class="form-control col-sm-9 text-center"   placeholder="'-' 없이 휴대전화 번호를 입력하세요">
+					<input type="text" onkeydown="return onlyNumber(event)" onkeyup='removeChar(event)' maxlength="11" id="customerPhone" name="customerPhone" class="form-control col-sm-9 text-center auto_trim"   placeholder="'-' 없이 휴대전화 번호를 입력하세요">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerAddr" class="col-sm-3 p-0 m-0">주소</label>
@@ -81,6 +81,10 @@
 		$(document).ready(function(){
 			$('#defaultNav').load('navbar');
 			$('footer').load('footer');
+			
+			$('.auto_trim').on('keyup',function(e) {
+				 $( this ).val($( this ).val().replace(/\s/g, ''));
+			});
 		
 			$('#btnJoin').click(function() {
 				//Eamil 정규식

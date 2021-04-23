@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
-<script src="/js/popper.js" th:src="@{/js/popper.js}"></script>
 <script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -45,6 +44,10 @@
 				}
 			});
 		});
+		
+		$(".enter").keyup(function(e){
+			if(e.keyCode == 13)  $('#btnLoginCheck').click(); 
+		});
 	});
 </script>
 <style>
@@ -63,11 +66,11 @@
         	<div class="container col-sm-6 mx-auto">
         		<div class="form-group d-flex row align-items-center">
 	                <label for="customerEmail" class="col-sm-3 p-0 m-0">이메일</label>
-	                <input type="text" id="customerEmail" name="customerEmail" class="form-control col-sm-9 text-center " placeholder="id@example.com">
+	                <input type="text" id="customerEmail" name="customerEmail" class="form-control col-sm-9 text-center enter" placeholder="id@example.com">
 	            </div>
 	            <div class="form-group d-flex row align-items-center">
 	         		<label for="customerPw" class="col-sm-3 p-0 m-0">비밀번호</label>
-					<input type="password" id="customerPw" name="customerPw" class="form-control col-sm-9 text-center "   placeholder="비밀번호를 입력해주세요">
+					<input type="password" id="customerPw" name="customerPw" class="form-control col-sm-9 text-center enter" placeholder="비밀번호를 입력해주세요">
 	            </div>
         	</div>
         </form>
