@@ -72,25 +72,15 @@
         <!--페이징-->
 			<div class="paging_area">
 				<div class="paging">
-					<a href="/zero/getMyPageList?page=1" class="first">첫 페이지</a>
-					<a href="/zero/getMyPageList?page=${pageMaker.startPage-1}" class="prev">이전 페이지</a>
+					<a th:if="${pageMaker.prev}" href="/zero/getMyPageList?page=1" class="first">첫 페이지</a>
+					<a th:if="${pageMaker.cri.page != 1}" th:href="@{/zero/getMyPageList(page=${pageMaker.cri.page-1})}" class="prev">이전 페이지</a>
 					
 					<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
 						<a th:href="@{/zero/getMyPageList(page=${i})}" class="num" th:classappend="${pageMaker.cri.page == i} ? active : '' " th:text="${i}"></a>
 					</th:block>
-					<!-- <a href="#" class="num active">1</a>
-					<a href="/" class="num">2</a>
-					<a href="#" class="num">3</a>
-					<a href="#" class="num">4</a>
-					<a href="#" class="num">5</a>
-					<a href="#" class="num">6</a>
-					<a href="#" class="num">7</a>
-					<a href="#" class="num">8</a>
-					<a href="#" class="num">9</a>
-					<a href="#" class="num">10</a> -->
 					
-					<a href="#" class="next">다음 페이지</a>
-					<a href="#" class="last">마지막 페이지</a>
+					<a th:if="${pageMaker.cri.page != pageMaker.lastPage}" th:href="@{/zero/getMyPageList(page=${pageMaker.cri.page+1})}" class="next">다음 페이지</a>
+					<a th:if="${pageMaker.next}" th:href="@{/zero/getMyPageList(page=${pageMaker.lastPage})}" class="last">마지막 페이지</a>
 				</div>
 			</div>
 			
