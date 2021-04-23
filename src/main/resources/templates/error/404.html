@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>zeroWaste</title>
+	<style>
+		/* error */
+		.err-wrap{height:100%;}
+		.err-sec{max-width:1170px;margin:0 auto;}
+		.err-head{background:#000;position:fixed;top:0;width:100%;height:72px;line-height:72px;}
+		.err-head h1 {padding-left:20px;}
+		.err-head a{display:inline-block;vertical-align:middle;}
+
+		.err-wrap .err-content {padding:250px 20px 250px; text-align:center;}
+		.err-wrap .err-content h2 {margin-top:53px; font-family:"YouandiModernTR"; font-size:28px; }
+		.err-wrap .err-content p {margin-top:20px; font-size:15px; line-height:20px; color:#666;}
+		.err-wrap .btn-wrap {margin-top:70px;}
+		.err-wrap .btn-wrap .btn-basic {margin-left:6px;}
+		.err-wrap .btn-wrap .btn-basic:first-child {margin-left:0;}
+
+		.ico-error {display:inline-block; width:165px; height:97px; background:url(/images/common/icon_sprite.png) no-repeat; vertical-align:middle; text-indent:-9999em;  background-position:-150px -200px;}
+		.btn-basic {display:inline-block; width:158px; height:53px; background-color:#fff; border:1px solid #bebebe; font-size:16px; color:#000; text-align:center;}
+		@media screen and (max-width: 768px){
+
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+
+		<hr>
+		<!-- container -->
+		<div class="err-wrap">
+
+			<!-- content -->
+			<div class="err-content">
+				<div class="err-sec" id="error_comment">
+					<i class="ico-error">에러 안내 아이콘</i>
+					<h2>사이트 이용에 불편을 드려 죄송합니다.</h2>
+					<p>주소가 잘못 입력되었거나, 변경 혹은 삭제되어 요청하신 페이지를 찾을 수 없습니다. <br />입력하신 주소가 정확한지 다시 한번 확인해 주세요.</p>
+					<div class="btn-wrap">
+						<button type="button" class="btn-basic" onclick="history.go(-1);"><span>이전페이지 이동</span></button>
+						<button type="button" class="btn-basic" onclick="location.href='/'"><span>홈으로 이동</span></button>
+					</div>
+				</div>
+			</div>
+			<!--// content -->
+		</div>
+		<!--// container -->
+	</div>
+</body>
+</html>
