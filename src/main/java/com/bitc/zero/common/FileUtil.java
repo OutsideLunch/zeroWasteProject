@@ -20,6 +20,9 @@ import com.bitc.zero.dto.TFileDto;
 // @Component - @Bean 어노테이션과 동일하게 Spring IoC 에 등록하여 자동 관리하도록 하는 어노테이션, 사용자가 직접 클래스를 생성하여 등록할 경우 @Component를 사용함
 @Component
 public class FileUtil {
+	// 배포시 위 root 사용  
+	//public static String root = "/home/ec2-user";
+	public static String root = "";
 	
 	public List<TFileDto> parseFileInfo(int boardIdx, MultipartHttpServletRequest uploadFiles) throws Exception {
 //		업로드된 파일이 존재하는지 여부 확인
@@ -35,8 +38,8 @@ public class FileUtil {
 		ZonedDateTime current = ZonedDateTime.now(); // 현재 날짜시간 가져오기
 		
 //		이미지 저장 폴더명 설정 (예 : images/20210316)
-//		String path = "images/" + current.format(format);
-		String path = "/img/" + current.format(format);
+//		String path = "/img/" + current.format(format);
+		String path = "/upload/" + current.format(format);
 		
 //		File 클래스를 통해서 실제 폴더 생성
 		File file = new File(path);
@@ -86,7 +89,7 @@ public class FileUtil {
 					fileList.add(boardFile);
 					
 //					서버에 업로드된 파일을 실제로 저장
-					file = new File(path + "/" + newFileName);
+					file = new File(root+path + "/" + newFileName);
 					multiFile.transferTo(file);
 				}
 			}
@@ -108,9 +111,8 @@ public class FileUtil {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd"); // 날짜 형식 지정
 		ZonedDateTime current = ZonedDateTime.now(); // 현재 날짜시간 가져오기
 		
-//		이미지 저장 폴더명 설정 (예 : images/20210316)
-//		String path = "images/" + current.format(format);
-		String path = "/img/" + current.format(format);
+		
+		String path = "/upload/" + current.format(format);
 		
 //		File 클래스를 통해서 실제 폴더 생성
 		File file = new File(path);
@@ -153,7 +155,6 @@ public class FileUtil {
 //					업로드된 파일의 이름을 변경 / 서버에 여러 사람이 접속하여 동시에 파일을 업로드할 경우 파일명이 겹칠 수 있기 때문에 날짜, 시간을 사용하여 파일을 이름을 겹치지 않도록 함
 					newFileName = Long.toString(System.nanoTime()) + oriFileExtension;
 					TFileDto productReviewFile = new TFileDto();
-					//boardFile.setBoardIdx(boardIdx);
 					productReviewFile.setProductReviewPk(productReviewIdx);
 					productReviewFile.setFileSize(multiFile.getSize());
 					productReviewFile.setOriginalFileName(multiFile.getOriginalFilename());
@@ -162,7 +163,8 @@ public class FileUtil {
 					fileList.add(productReviewFile);
 					
 //					서버에 업로드된 파일을 실제로 저장
-					file = new File(path + "/" + newFileName);
+					file = new File(root+path + "/" + newFileName);
+					System.out.println("filePath :::"+file);
 					multiFile.transferTo(file);
 				}
 			}
