@@ -4,9 +4,19 @@ plugins {
 	id 'java'
 }
 
+apply plugin: 'war'
+
+war {
+    archiveName = 'ROOT.war'
+}
+
+bootWar {
+    archiveName = 'ROOT.war'
+}
+
 group = 'com.bitc'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 configurations {
 	compileOnly {

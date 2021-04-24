@@ -117,7 +117,7 @@
 	
 	<select id="seletLastProductReviewPk" resultType="Integer">
 		SELECT 	MAX(PRODUCT_REVIEW_PK) + 1
-		FROM 	PRODUCT_REVIEW
+		FROM 	product_review
 		
 	</select>
 	

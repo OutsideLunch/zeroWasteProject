@@ -62,6 +62,8 @@
 				product_file f
 			ON
 				p.product_pk = f.product_pk
+			WHERE
+				p.product_pk = #{productPk}
 			ORDER BY 
 				f.stored_file_path DESC
 			LIMIT 1
