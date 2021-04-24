@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bitc.zero.common.WebPackage;
 import com.bitc.zero.dto.CategoryDto;
 import com.bitc.zero.dto.JoinDto;
 import com.bitc.zero.dto.ProductDetailDto;
@@ -75,8 +76,9 @@ public class ZeroController {
 		
 		JoinDto dto = new JoinDto();
 		String customerEmail = param.get("customerEmail");
-		dto.setCustomerPw(param.get("customerPw"));
+		String encryptionPw = WebPackage.Encrypt256(param.get("customerPw"));
 		dto.setCustomerEmail(customerEmail);
+		dto.setCustomerPw(encryptionPw);
 		
 		int count = sql.selectOne("loginMapper.selectCustomerInfoYn", dto);
 			
