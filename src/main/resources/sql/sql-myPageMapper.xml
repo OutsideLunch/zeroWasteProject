@@ -116,8 +116,19 @@
 	</insert>
 	
 	<select id="seletLastProductReviewPk" resultType="Integer">
-		SELECT 	MAX(PRODUCT_REVIEW_PK) + 1
+		/* myPageMapper.seletLastProductReviewPk */
+		
+		SELECT 	IFNULL(
+               	(
+              		SELECT 	MAX(product_review_pk) + 1
+			  		FROM 	product_review
+			  		LIMIT 1
+              	), 1  ) AS result
 		FROM 	product_review
+		UNION 	ALL
+		SELECT 	1 AS result
+		FROM DUAL
+		LIMIT 1
 		
 	</select>
 	
