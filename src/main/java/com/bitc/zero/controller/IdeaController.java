@@ -153,7 +153,8 @@ public class IdeaController {
 		if(ObjectUtils.isEmpty(zeroFile) == false) {
 			String fileName = zeroFile.getOriginalFileName();
 			
-			byte[] files = FileUtils.readFileToByteArray(new File(zeroFile.getStoredFilePath()));
+			byte[] files = FileUtils.readFileToByteArray(new File(fileUtil.root+zeroFile.getStoredFilePath()));
+			
 			
 			response.setContentType("application/octet-stream");
 			response.setContentLength(files.length);
