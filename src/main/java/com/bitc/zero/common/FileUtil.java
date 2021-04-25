@@ -35,15 +35,9 @@ public class FileUtil {
 		ZonedDateTime current = ZonedDateTime.now(); // 현재 날짜시간 가져오기
 		
 //		이미지 저장 폴더명 설정 (예 : images/20210316)
-<<<<<<< HEAD
-//		String path = "images/" + current.format(format);
-		//String path = "/img/" + current.format(format);
-		String path = "/upload/img/"+current.format(format);
-=======
 //		String path = "/img/" + current.format(format);
 		String path = "/upload/" + current.format(format);
 		
->>>>>>> 015a9ffb01d73cb477f75e9f5d41d0909897a114
 //		File 클래스를 통해서 실제 폴더 생성
 		File file = new File(path);
 //		기존에 동일한 폴더가 존재하는지 확인
