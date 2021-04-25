@@ -48,7 +48,7 @@
 					<div class="col-sm-4 px-3" th:if="${#lists.size(data)}>0" th:each="list : ${data}">
 						<div>
 							<a href="/zero/productDetail/" th:attrappend="href=${list.productPk}"><img th:src="${list.storedFilePath}" alt="" width="250px"></a><br> 
-							<p th:text="${list.productName}"></p><span class="badge badge-success rounded-0">New</span>
+							<p th:text="${list.productName}"></p>
 							<p th:text="${list.productPrice}+'원'"></p>
 						</div>
 					</div>
