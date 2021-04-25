@@ -111,7 +111,6 @@ public class FileUtil {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd"); // 날짜 형식 지정
 		ZonedDateTime current = ZonedDateTime.now(); // 현재 날짜시간 가져오기
 		
-		
 		String path = "/upload/" + current.format(format);
 		
 //		File 클래스를 통해서 실제 폴더 생성
@@ -164,7 +163,6 @@ public class FileUtil {
 					
 //					서버에 업로드된 파일을 실제로 저장
 					file = new File(root+path + "/" + newFileName);
-					System.out.println("filePath :::"+file);
 					multiFile.transferTo(file);
 				}
 			}
