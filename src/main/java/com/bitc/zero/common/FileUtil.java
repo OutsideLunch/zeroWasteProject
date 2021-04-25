@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,8 +33,8 @@ public class FileUtil {
 		
 //		이미지 저장 폴더명 설정 (예 : images/20210316)
 //		String path = "images/" + current.format(format);
-		String path = "/img/" + current.format(format);
-		
+		//String path = "/img/" + current.format(format);
+		String path = "/upload/img/"+current.format(format);
 //		File 클래스를 통해서 실제 폴더 생성
 		File file = new File(path);
 //		기존에 동일한 폴더가 존재하는지 확인
