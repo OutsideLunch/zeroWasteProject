@@ -1,14 +1,9 @@
 package com.bitc.zero.common;
 
 import java.io.File;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -34,19 +29,18 @@ public class FileUtil {
 		List<TFileDto> fileList = new ArrayList<>();
 		
 		///////////  서버에 파일을 저장할 디렉토리 생성
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd"); // 날짜 형식 지정
-		ZonedDateTime current = ZonedDateTime.now(); // 현재 날짜시간 가져오기
+		//DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd"); // 날짜 형식 지정
+		//ZonedDateTime current = ZonedDateTime.now(); // 현재 날짜시간 가져오기
 		
 //		이미지 저장 폴더명 설정 (예 : images/20210316)
-//		String path = "/img/" + current.format(format);
-		String path = "/upload/" + current.format(format);
+		String path = "/upload";
 		
 //		File 클래스를 통해서 실제 폴더 생성
 		File file = new File(path);
 //		기존에 동일한 폴더가 존재하는지 확인
-		if (file.exists() == false) {
-			file.mkdirs(); // 폴더 생성
-		}
+//		if (file.exists() == false) {
+//			file.mkdirs(); // 폴더 생성
+//		}
 		///////////  이미지 저장 폴더 생성 부분
 		
 		Iterator<String> iterator = uploadFiles.getFileNames();
@@ -108,17 +102,17 @@ public class FileUtil {
 		List<TFileDto> fileList = new ArrayList<>();
 		
 		///////////  서버에 파일을 저장할 디렉토리 생성
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd"); // 날짜 형식 지정
-		ZonedDateTime current = ZonedDateTime.now(); // 현재 날짜시간 가져오기
+//		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd"); // 날짜 형식 지정
+//		ZonedDateTime current = ZonedDateTime.now(); // 현재 날짜시간 가져오기
 		
-		String path = "/upload/" + current.format(format);
+		String path = "/upload";
 		
 //		File 클래스를 통해서 실제 폴더 생성
 		File file = new File(path);
 //		기존에 동일한 폴더가 존재하는지 확인
-		if (file.exists() == false) {
-			file.mkdirs(); // 폴더 생성
-		}
+//		if (file.exists() == false) {
+//			file.mkdirs(); // 폴더 생성
+//		}
 		///////////  이미지 저장 폴더 생성 부분
 		
 		Iterator<String> iterator = uploadFiles.getFileNames();

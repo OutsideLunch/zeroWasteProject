@@ -121,25 +121,5 @@ public class NoticeController {
 		return "redirect:/zero/noticeList";
 	}
 	
-	// 공지사항 상세보기 다운로드파일
-//	@RequestMapping(value="/zero/downloadFile", method=RequestMethod.GET)
-//	public void downloadFile(@RequestParam int idx, @RequestParam int boardIdx, HttpServletResponse response) throws Exception {
-//		
-//		TFileDto zeroFile = zeroService.zeroFileInformation(idx, boardIdx);
-//		
-//		if(ObjectUtils.isEmpty(zeroFile) == false) {
-//			String fileName = zeroFile.getOriginalFileName();
-//			
-//			byte[] files = FileUtils.readFileToByteArray(new File(zeroFile.getStoredFilePath()));
-//			
-//			response.setContentType("application/octet-stream");
-//			response.setContentLength(files.length);
-//			response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(fileName, "UTF-8") + "\";");
-//			response.setHeader("Content-Transfer-Encoding", "binary");
-//			
-//			response.getOutputStream().write(files);
-//			response.getOutputStream().flush();
-//			response.getOutputStream().close();
-//		}
-//	}	
+	
 }
